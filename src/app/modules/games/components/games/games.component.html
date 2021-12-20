@@ -1,0 +1,11 @@
+<div class="d-flex flex-column justify-content-center align-items-center h-100">
+    <h2 class="text-uppercase light" translate="i18n.COMMON.CHOOSE_YOUR_GAME"></h2>
+    <div class="d-flex flex-column align-items-stretch">
+        <div [routerLink]="['./' + Game.Nechto.toLowerCase()]"
+             class="btn btn-primary btn-lg m-2 wide btn-game btn-nechto" tabindex="0"
+             translate="i18n.GAMES.NECHTO"></div>
+        <div [routerLink]="['./' + Game.Trump.toLowerCase()]"
+             class="btn btn-primary btn-lg m-2 wide btn-game btn-trump" tabindex="0"
+             translate="i18n.GAMES.TRUMP"></div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+@import '../../../../../styles/partials/colors';
+
+.gw-rating {
+    background-color: $color-bg-light;
+
+    &-wrapper {
+        .gw-rating-table {
+            .gw-user-avatar {
+                background-size: cover;
+                background-position: center;
+                width: 50px;
+                height: 50px;
+            }
+
+            .gw-user-rating {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    }
+}

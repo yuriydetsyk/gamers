@@ -1,0 +1,46 @@
+@import '../../../../../styles/partials/colors';
+
+.gw-contacts {
+    background-color: $color-bg-light;
+
+    .gw-contact-company,
+    .gw-contact-author {
+        position: relative;
+
+        .gw-contact-bg {
+            background-color: transparent;
+            background-repeat: no-repeat;
+            background-position: center;
+            border: none;
+            filter: blur(5px);
+            transition: filter 0.5s ease-in-out;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+        }
+
+        &:hover {
+            .gw-contact-bg {
+                filter: blur(0);
+            }
+        }
+    }
+
+    .gw-contact-company {
+        .gw-contact-bg {
+            background-image: url('../../../../../assets/images/chunkup-logo-large.png');
+            background-size: 100% auto;
+        }
+    }
+
+    .gw-contact-author {
+        .gw-contact-bg {
+            background-image: url('../../../../../assets/images/yuriyd.jpg');
+            background-size: auto 100%;
+        }
+    }
+
+    .contact-image {
+        width: 200px;
+    }
+}

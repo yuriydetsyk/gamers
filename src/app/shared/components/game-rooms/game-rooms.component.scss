@@ -1,0 +1,20 @@
+@import '../../../../styles/partials/colors';
+
+.gw-game-rooms {
+    .gw-room {
+        &-icon {
+            color: $color-yellowish-light;
+            font-size: 46px;
+        }
+
+        &-players {
+            min-width: 50px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        p {
+            margin: 0;
+        }
+    }
+}

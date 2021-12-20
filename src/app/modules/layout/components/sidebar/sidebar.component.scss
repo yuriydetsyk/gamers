@@ -1,0 +1,36 @@
+@import '../../../../../styles/partials/colors';
+
+.gw-sidebar-wrapper {
+    background-color: $color-bg-light;
+    position: relative;
+    min-width: 62px;
+    width: 62px;
+    height: 100%;
+
+    &.opened {
+        background-color: $color-white;
+        min-width: 200px;
+        width: 200px;
+        z-index: 98;
+    }
+
+    .gw-sidebar-toggler {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 99;
+
+        .btn {
+            padding: 0;
+            min-width: 46px;
+        }
+    }
+
+    .gw-sidebar-content {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: calc(100% - 3rem);
+    }
+}

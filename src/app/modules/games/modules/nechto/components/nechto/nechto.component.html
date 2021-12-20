@@ -1,0 +1,132 @@
+<div *ngIf="hasSelectedRoom"
+     class="flex-grow-1 d-flex flex-column justify-content-between h-100 smth-game">
+    <div class="d-flex justify-content-center align-items-center smth-step-info border border-top-0 border-dark"
+         *ngIf="isGameMode && !isGameFinished">
+        <div class="d-flex justify-content-center p-2 w-40 h-100 border-right border-dark">
+            <div class="d-flex flex-column justify-content-center align-items-start">
+                <h6 class="m-0" translate="i18n.GAME.CURRENT_PLAYER_ACTIONS"></h6>
+
+                <div class="d-flex align-items-center flex-wrap">
+                    <ng-container
+                                  *ngIf="currentStepPlayer && currentStepPlayer.hasPlayer; then player else emptyDash">
+                    </ng-container>
+
+                    <ng-template #player>
+                        <h5 class="d-flex mb-0">
+                            <span
+                                  class="badge badge-dark">{{currentStepPlayer.user.username}}</span>
+                            <span class="mx-1">:</span>
+                        </h5>
+                    </ng-template>
+
+                    <ng-container
+                                  *ngIf="currentStepPhases.length > 0; then stepPhases else emptyDash">
+                    </ng-container>
+
+                    <ng-template #stepPhases>
+                        <h5 class="mb-0 mr-2" *ngFor="let stepPhase of currentStepPhases">
+                            <span
+                                  class="badge badge-secondary">{{getFormattedStepPhase(stepPhase)}}</span>
+                        </h5>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center p-2 w-20 h-100 border-right border-dark">
+            <div class="d-flex flex-column justify-content-center align-items-center flex-wrap">
+                <ng-container *ngIf="hasAnyActiveCard; then activeCardInfo else noCardInfo">
+                </ng-container>
+
+                <ng-template #activeCardInfo>
+                    <h6 class="m-0" *ngIf="hasActiveEventCard"
+                        translate="i18n.GAME.ACTIVE_EVENT_CARD"></h6>
+                    <h6 class="m-0" *ngIf="hasActivePanicCard"
+                        translate="i18n.GAME.ACTIVE_PANIC_CARD"></h6>
+
+                    <div class="d-flex align-items-center">
+                        <h5 class="mb-0 mr-2">
+                            <span
+                                  class="badge badge-secondary">{{getFormattedAction(activeCard.action)}}</span>
+                        </h5>
+                        <gw-nechto-card [card]="activeCard" [isDisabled]="true"
+                                        [location]="CardLocation.Info"></gw-nechto-card>
+                    </div>
+                </ng-template>
+
+                <ng-template #noCardInfo>
+                    <h6 class="m-0" translate="i18n.GAME.NO_ACTIVE_CARD"></h6>
+
+                    <div class="d-flex align-items-center">
+                        <ng-container *ngTemplateOutlet="emptyDash"></ng-container>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center p-2 w-20 h-100 border-right border-dark"
+             *ngIf="isGameMode && !isGameFinished">
+            <div class="d-flex flex-column justify-content-center align-items-center">
+                <h6 class="mb-0" translate="i18n.COMMON.DIRECTION"></h6>
+                <div class="d-flex">
+                    <h5 class="mb-0">
+                        <span class="badge badge-dark font-weight-normal smth-game-direction"
+                              [innerHTML]="formattedGameDirection"></span>
+                    </h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center p-2 w-30 h-100">
+            <div class="d-flex flex-column justify-content-center align-items-start">
+                <ng-container
+                              *ngIf="isGameMode && !isGameFinished && formattedStepInfo; then lastStepInfo else noStepInfo">
+                </ng-container>
+
+                <ng-template #lastStepInfo>
+                    <h6 class="mb-0 mr-2" translate="i18n.GAME.LAST_STEP_INFO"></h6>
+                    <div class="d-flex">
+                        <h5 class="mb-0">
+                            <span class="badge badge-dark font-weight-normal smth-prev-step-info"
+                                  [innerHTML]="formattedStepInfo"></span>
+                        </h5>
+                    </div>
+                </ng-template>
+
+                <ng-template #noStepInfo>
+                    <div class="d-flex flex-column justify-content-center align-items-center">
+                        <h6 class="m-0" translate="i18n.GAME.NO_STEPS_MADE"></h6>
+
+                        <div class="d-flex align-items-center">
+                            <ng-container *ngTemplateOutlet="emptyDash"></ng-container>
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex align-items-center smth-players-row" [ngClass]="getPositioningClass(1)">
+        <gw-nechto-player *ngFor="let playerId of getPlayerComponents([1,2,3,4,5])"
+                          [playerId]="playerId"></gw-nechto-player>
+    </div>
+
+    <div class="d-flex align-items-center smth-players-row" [ngClass]="getPositioningClass(2)">
+        <gw-nechto-player *ngFor="let playerId of getPlayerComponents([12])" [playerId]="playerId">
+        </gw-nechto-player>
+        <gw-nechto-table></gw-nechto-table>
+        <gw-nechto-player *ngFor="let playerId of getPlayerComponents([6])" [playerId]="playerId">
+        </gw-nechto-player>
+    </div>
+
+    <div class="d-flex align-items-center smth-players-row" [ngClass]="getPositioningClass(3)">
+        <gw-nechto-player *ngFor="let playerId of getPlayerComponents([11,10,9,8,7])"
+                          [playerId]="playerId"></gw-nechto-player>
+    </div>
+</div>
+
+<ng-template #emptyDash>
+    <h5 class="mb-0">
+        <span class="badge badge-secondary">-</span>
+    </h5>
+</ng-template>

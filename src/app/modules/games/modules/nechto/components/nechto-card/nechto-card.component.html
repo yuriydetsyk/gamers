@@ -1,0 +1,62 @@
+<ng-container *ngIf="card">
+
+    <ng-container *ngIf="hasAnyAction; then activeCard else inactiveCard"></ng-container>
+
+    <ng-template #activeCard>
+        <div [matMenuTriggerFor]="cardMenu">
+            <ng-container *ngTemplateOutlet="cardItem"></ng-container>
+        </div>
+    </ng-template>
+
+    <ng-template #inactiveCard>
+        <div>
+            <ng-container *ngTemplateOutlet="cardItem"></ng-container>
+        </div>
+    </ng-template>
+
+    <ng-template #cardItem>
+        <div
+            class="card smth-card"
+            [ngClass]="{'smth-card-back': !canView, 'smth-card-disabled': isCardDisabled, 'smth-card-inactive': !hasAnyAction}"
+            [attr.data-id]="card.id"
+            [attr.data-type]="card.type"
+            [attr.data-action]="card.action"
+            [tooltip]="tooltipTemplate"
+            content-type="html">
+        </div>
+    </ng-template>
+
+    <mat-menu #cardMenu="matMenu">
+        <ng-container *ngIf="canPlay">
+            <ng-container *ngIf="!filteredReceivingPlayers.length; then playCardSimple else playCardToSomebody"></ng-container>
+
+            <ng-template #playCardSimple>
+                <button mat-menu-item (click)="playCard()">{{getActionName(GameActionGroup.Play)}}</button>
+            </ng-template>
+
+            <ng-template #playCardToSomebody>
+                <button mat-menu-item [matMenuTriggerFor]="playCardMenu">{{getActionName(GameActionGroup.Play)}}</button>
+            </ng-template>
+        </ng-container>
+
+        <button mat-menu-item (click)="takeCard()" *ngIf="canTake">{{getActionName(GameActionGroup.Take)}}</button>
+        <button mat-menu-item (click)="dropCard()" *ngIf="canDrop">{{getActionName(GameActionGroup.Drop)}}</button>
+        <button mat-menu-item [matMenuTriggerFor]="giveCardMenu" *ngIf="canGive">{{getActionName(GameActionGroup.Give)}}</button>
+    </mat-menu>
+
+
+    <mat-menu #playCardMenu="matMenu">
+        <button
+            mat-menu-item
+            *ngFor="let player of filteredReceivingPlayers"
+            (click)="playCard(player.playerId)">{{'i18n.COMMON.PLAY_TO' | translate}} {{player.user.username}}</button>
+    </mat-menu>
+
+    <mat-menu #giveCardMenu="matMenu">
+        <button
+            mat-menu-item
+            *ngFor="let player of filteredReceivingPlayers"
+            (click)="giveCard(player.playerId)">{{'i18n.COMMON.GIVE_TO' | translate}} {{player.user.username}}</button>
+    </mat-menu>
+
+</ng-container>

@@ -1,0 +1,14 @@
+.btn-game {
+    background-position: 20px center;
+    background-size: 70px auto;
+    background-repeat: no-repeat;
+    padding: 50px;
+
+    &.btn-nechto {
+        background-image: url('../../../../../assets/images/games/nechto/game-nechto.png');
+    }
+
+    &.btn-trump {
+        background-image: url('../../../../../assets/images/games/trump/game-trump.png');
+    }
+}

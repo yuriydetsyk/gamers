@@ -1,0 +1,60 @@
+<div class="flex-fill d-flex flex-column justify-content-between align-items-stretch smth-game-table">
+    <div class="d-flex smth-table-row" [ngClass]="getPositioningClass(1)">
+        <ng-container *ngFor="let playerId of getPlayerComponents([1,2,3,4,5])" [ngTemplateOutlet]="playerTableCards"
+            [ngTemplateOutletContext]="{playerId:playerId}"></ng-container>
+    </div>
+
+    <div class="d-flex smth-table-row" [ngClass]="getPositioningClass(2)">
+        <ng-container *ngFor="let playerId of getPlayerComponents([12])" [ngTemplateOutlet]="playerTableCards"
+            [ngTemplateOutletContext]="{playerId:playerId}"></ng-container>
+
+        <div class="d-flex justify-content-center align-items-end flex-wrap smth-table-deck">
+            <div class="d-flex flex-column align-items-center smth-deck-trash" *ngIf="isGameMode">
+                <gw-nechto-card *ngIf="game.trash.length > 0; else emptyTrash" [card]="game.trash[0]" [isClickable]="!isBotPlaying"
+                    [isDisabled]="true" [location]="CardLocation.Trash"></gw-nechto-card>
+
+                <ng-template #emptyTrash>
+                    <label class="smth-deck-label smth-deck-empty" translate="i18n.COMMON.EMPTY"></label>
+                </ng-template>
+
+                <label class="smth-deck-label smth-deck-title" translate="i18n.COMMON.TRASH"></label>
+            </div>
+
+            <div class="d-flex flex-column align-items-center smth-deck" *ngIf="isGameMode">
+                <gw-nechto-card *ngIf="game.deck.length > 0; else emptyDeck" [card]="game.deck[0]" [isClickable]="!isBotPlaying"
+                    [location]="CardLocation.Deck"></gw-nechto-card>
+
+                <ng-template #emptyDeck>
+                    <label
+                    class="smth-deck-label smth-deck-refill"
+                    [ngClass]="{'smth-deck-inactive': !isTakingStep}"
+                    (click)="refillDeck()" translate="i18n.COMMON.REFILL"></label>
+                </ng-template>
+
+                <label class="smth-deck-label smth-deck-title" translate="i18n.COMMON.DECK"></label>
+            </div>
+
+            <div class="align-self-center smth-game-actions">
+                <div class="btn btn-primary" *ngIf="canStartGame" (click)="startGame()" translate="i18n.COMMON.START_GAME"></div>
+            </div>
+        </div>
+
+        <ng-container *ngFor="let playerId of getPlayerComponents([6])" [ngTemplateOutlet]="playerTableCards"
+            [ngTemplateOutletContext]="{playerId:playerId}"></ng-container>
+    </div>
+
+    <div class="d-flex smth-table-row" [ngClass]="getPositioningClass(3)">
+        <ng-container *ngFor="let playerId of getPlayerComponents([11,10,9,8,7])" [ngTemplateOutlet]="playerTableCards"
+            [ngTemplateOutletContext]="{playerId:playerId}"></ng-container>
+    </div>
+</div>
+
+<div class="d-flex justify-content-center align-items-center smth-game-finished" *ngIf="isGameMode && isGameFinished">
+    <h1><span class="badge badge-dark">{{(humansWon ? 'i18n.GAME.HUMANS_WON' : 'i18n.GAME.IT_WON') | translate}}</span></h1>
+</div>
+
+<ng-template #playerTableCards let-playerId="playerId">
+    <div class="d-flex justify-content-center align-items-center flex-wrap smth-table-cards">
+        <gw-nechto-card *ngFor="let card of game?.table[playerId]" [card]="card" [isClickable]="!isBotPlaying" [location]="CardLocation.Table"></gw-nechto-card>
+    </div>
+</ng-template>

@@ -1,0 +1,38 @@
+$color-greenish-dark: #116466;
+$color-greenish-light: #d1e8e2;
+$color-yellowish-dark: #d9b08c;
+$color-yellowish-light: #ffcb9a;
+$color-yellowish-shadow: rgba(255, 203, 154, 0.5);
+$color-bluish: #1a99aa;
+
+$color-primary-light: #49c5b6;
+$color-primary-dark: #42AB9E;
+$color-primary-contrast: #00FCA3;
+$color-primary-shadow: rgba(73, 197, 182, 0.5);
+$color-warning: #ecd06f;
+$color-danger: #df6c4f;
+
+$color-black: #000;
+$color-black-transparent: rgba(0,0,0,0.5);
+$color-black-transparent2: rgba(0,0,0,0.32);
+$color-dark: #343a40;
+$color-dark2: #3d3f3f;
+$color-grey: #64686A;
+$color-lightgrey: lightgrey;
+$color-light: #fcfcfc;
+$color-bg-light: #f4f7f6;
+$color-bg-light-transparent: rgba(244, 247, 246, 0.3);
+$color-bg-yellow-transparent: rgba(255, 203, 154, 0.8);
+$color-white: #fff;
+
+// below defines your custom color to build a theme palette from
+$mat-primary-custom: (
+  50: $color-primary-light,
+  100: $color-primary-dark,
+  200: $color-greenish-dark,
+  contrast: (
+    50: white,
+    100: white,
+    200: white
+  )
+);

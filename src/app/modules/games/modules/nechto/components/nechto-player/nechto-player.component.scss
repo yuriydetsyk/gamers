@@ -1,0 +1,229 @@
+@import '../../../../../../../styles/partials/colors';
+
+.smth-player {
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0px 0px 10px 0px $color-black-transparent;
+    width: 200px;
+    height: 270px;
+    margin: 10px;
+    position: relative;
+    z-index: 1;
+    box-sizing: content-box;
+
+    &:hover,
+    &.taking-step {
+        .smth-player-cards {
+            opacity: 1;
+        }
+    }
+
+    &:not(.active) {
+        background-image: url('../../../../../../../assets/images/games/nechto/game-nechto.png');
+        background-size: auto 50%;
+    }
+
+    &.active {
+        .card-body {
+            opacity: 1;
+
+            .smth-player-wrapper {
+
+                .smth-player-video,
+                .smth-player-thumbnail {
+                    background-color: $color-white;
+                }
+            }
+
+            .smth-player-actions {
+                opacity: 0;
+            }
+
+            &:hover {
+                .smth-player-actions {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+    &.taking-step {
+        background-color: $color-dark;
+        border: 2px solid $color-primary-dark;
+        box-shadow: 0px 0px 5px 2px $color-primary-dark;
+        animation: pulsate-green 1s ease-in-out infinite;
+
+        .card-body {
+            .smth-player-panel {
+                background-color: $color-black;
+            }
+        }
+
+        &:not(.bot) {
+            .smth-player-actions-extra {
+                display: flex !important;
+            }
+        }
+    }
+
+    &.bot {
+        .smth-player-cards {
+            display: none !important;
+
+            &-visible {
+                display: flex !important;
+            }
+        }
+    }
+
+    &.destroyed {
+        background-image: url('../../../../../../../assets/images/cross.png');
+        background-size: 100% auto;
+        background-color: $color-lightgrey;
+
+        .card-body {
+            .smth-player-wrapper {
+
+                .smth-player-video,
+                .smth-player-thumbnail {
+                    opacity: 0.5;
+                }
+            }
+
+            .smth-player-panel {
+                background-color: $color-lightgrey;
+            }
+        }
+
+        .smth-player-cards {
+            background-color: $color-lightgrey;
+        }
+    }
+
+    &.infected {
+        border-image-source: url('../../../../../../../assets/images/games/nechto/border-slime.png');
+        border-image-slice: 77;
+        border-image-repeat: round;
+        border-width: 10px;
+        border-color: transparent;
+        border-style: solid;
+    }
+
+    .card-body {
+        position: relative;
+        opacity: 0.2;
+        padding: 0;
+
+        &:hover {
+            opacity: 1;
+        }
+
+        .smth-player-panel {
+            background-color: $color-yellowish-light;
+            border-radius: 5px 5px 0 0;
+            color: $color-white;
+            margin: 0;
+            padding: 5px;
+            position: relative;
+
+            .gw-user-rating {
+                border-left: none;
+                border-right: 2px solid $color-yellowish-light;
+                border-top: 1px solid $color-yellowish-light;
+                border-bottom: 1px solid $color-yellowish-light;
+                position: absolute;
+                top: -2.5px;
+                left: -20px;
+                width: 40px;
+                height: 40px;
+            }
+
+            .smth-video-enabled,
+            .smth-audio-enabled {
+                color: $color-white;
+
+                &:hover {
+                    color: $color-grey;
+                }
+            }
+
+            .smth-video-disabled,
+            .smth-audio-disabled {
+                color: $color-grey;
+            }
+        }
+
+        .smth-player-wrapper {
+            overflow-x: hidden;
+
+            .smth-player-video {
+                width: 100%;
+                max-height: 236px;
+            }
+
+            &.smth-player-fullscreen {
+                border-radius: 0 0 5px 5px;
+
+                .smth-player-video {
+                    width: auto;
+                    height: 100%;
+                    max-height: none;
+                }
+            }
+
+            .smth-player-thumbnail {
+                background-color: transparent;
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: auto 100%;
+                border-radius: 0 0 5px 5px;
+                width: 100%;
+                height: 236px;
+            }
+        }
+
+        .smth-player-actions {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            padding: 5px;
+            width: 100%;
+            z-index: 2;
+        }
+    }
+
+    .smth-player-actions-extra {
+        position: absolute;
+        top: 35px;
+        left: 0;
+        padding: 5px;
+        width: 100%;
+        z-index: 2;
+    }
+
+    &-cards {
+        background-color: $color-yellowish-light;
+        border-radius: 0 0 5px 5px;
+        width: 100%;
+        height: 100px;
+        position: relative;
+        opacity: 0.1;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+
+        &-visible {
+            opacity: 1;
+
+            &.smth-player-cards-bot {
+                opacity: 0;
+            }
+        }
+    }
+}
+
+.smth-border-cards {
+    height: 270px;
+}

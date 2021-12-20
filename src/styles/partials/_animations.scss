@@ -1,0 +1,11 @@
+@keyframes pulsate-yellow {
+    0%   { box-shadow: 0px 0px 5px 2px $color-yellowish-light; }
+    50%  { box-shadow: 0px 0px 15px 2px $color-yellowish-light; }
+    100% { box-shadow: 0px 0px 5px 2px $color-yellowish-light; }
+}
+
+@keyframes pulsate-green {
+    0%   { box-shadow: 0px 0px 5px 2px $color-primary-dark; }
+    50%  { box-shadow: 0px 0px 15px 2px $color-primary-dark; }
+    100% { box-shadow: 0px 0px 5px 2px $color-primary-dark; }
+}

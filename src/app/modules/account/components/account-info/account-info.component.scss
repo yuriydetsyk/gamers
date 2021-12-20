@@ -1,0 +1,13 @@
+@import '../../../../../styles/partials/colors';
+
+.gw-account-info {
+    background-color: $color-bg-light;
+    height: calc(100% - 45px);
+
+    .avatar {
+        width: 180px;
+    }
+    #avatarFile {
+        display: none;
+    }
+}

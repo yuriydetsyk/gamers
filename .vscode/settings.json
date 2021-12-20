@@ -1,0 +1,18 @@
+{
+    "twp.ShowTeamworkPanel": false,
+    "twp.OnlySelfAssigned": false,
+    "twp.showUnAssigned": true,
+    "twp.enabletimeTracking": true,
+    "twp.ShowGitInfo": true,
+    "javascript.preferences.quoteStyle": "single",
+    "typescript.preferences.quoteStyle": "single",
+    "javascript.preferences.importModuleSpecifier": "relative",
+    "typescript.preferences.importModuleSpecifier": "relative",
+    "liveServer.settings.https": {
+        "enable": true,
+        "cert": "D:/work/freelance/Gamers/certificates/localhost.crt",
+        "key": "D:/work/freelance/Gamers/certificates/localhost.key",
+        "passphrase": ""
+    },
+    "liveServer.settings.root": "/dist/gamers-website"
+}

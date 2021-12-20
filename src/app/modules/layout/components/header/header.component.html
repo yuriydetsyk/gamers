@@ -1,0 +1,96 @@
+<div class="d-flex justify-content-between align-items-center p-2 gw-header-container">
+    <div class="d-flex justify-content-start align-items-center">
+        <div routerLink="/" class="d-flex align-items-center m-1 gw-logo-wrapper">
+            <img class="gw-logo" src="./assets/images/logo-temp.png">
+            <h3 class="light gw-website-title">{{websiteTitle}}</h3>
+        </div>
+
+        <div class="dropdown" (mouseleave)="toggleMenuItem(MenuItem.Games, false)">
+            <button (mouseenter)="toggleMenuItem(MenuItem.Games)"
+                    [class.active]="isMenuItemActive(MenuItem.Games)"
+                    class="btn btn-secondary light m-1 dropdown-toggle" type="button"
+                    translate="i18n.COMMON.GAMES"></button>
+            <div (click)="toggleMenuItem(MenuItem.Games, false)" class="dropdown-menu"
+                 [class.show]="isMenuItemActive(MenuItem.Games)">
+                <a [routerLink]="['games', Game.Nechto.toLowerCase()]" class="dropdown-item"
+                   translate="i18n.GAMES.NECHTO"></a>
+                <a [routerLink]="['games', Game.Trump.toLowerCase()]" class="dropdown-item"
+                   translate="i18n.GAMES.TRUMP"></a>
+            </div>
+        </div>
+
+        <div routerLink="rating" class="btn btn-secondary light m-1" tabindex="0"
+             translate="i18n.COMMON.RATING"></div>
+        <div routerLink="info/contacts" class="btn btn-secondary light m-1" tabindex="0"
+             translate="i18n.COMMON.CONTACTS"></div>
+
+        <!-- TODO: add premium features -->
+        <!-- <div routerLink="premium" class="btn btn-dark m-1" tabindex="0" translate="i18n.COMMON.PREMIUM"></div> -->
+    </div>
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-secondary btn-flex light m-1" type="button">
+            <i class="material-icons" (click)="toggleAudioEffects()"
+               title="{{(hasAudioEffects ? 'i18n.COMMON.DISABLE_AUDIO_EFFECTS' : 'i18n.COMMON.ENABLE_AUDIO_EFFECTS') | translate}}">
+                {{hasAudioEffects ? 'volume_up' : 'volume_off'}}
+            </i>
+        </button>
+
+        <div class="dropdown" (mouseleave)="toggleMenuItem(MenuItem.Language, false)">
+            <button (mouseenter)="toggleMenuItem(MenuItem.Language)"
+                    [class.active]="isMenuItemActive(MenuItem.Language)"
+                    class="btn btn-secondary btn-flex light m-1 dropdown-toggle"
+                    type="button">
+                <img [src]="getFormattedLanguageUrl(selectedLanguage)"
+                     [title]="getFormattedLanguage(selectedLanguage)">
+            </button>
+
+            <div (click)="toggleMenuItem(MenuItem.Language, false)" class="dropdown-menu"
+                 [class.show]="isMenuItemActive(MenuItem.Language)">
+
+                <div *ngFor="let language of availableLanguages" class="dropdown-item"
+                     (click)="setLanguage(language)">
+                    <img [src]="getFormattedLanguageUrl(language)" class="mr-1"
+                         [title]="getFormattedLanguage(language)">
+                    <span>{{language | uppercase}}</span>
+                </div>
+            </div>
+        </div>
+
+        <ng-container *ngIf="isLogged; else unathorizedMenu">
+            <div *ngIf="!isGuest" class="dropdown"
+                 (mouseleave)="toggleMenuItem(MenuItem.User, false)">
+                <button (mouseenter)="toggleMenuItem(MenuItem.User)"
+                        [class.active]="isMenuItemActive(MenuItem.User)"
+                        class="btn btn-secondary btn-icon btn-flex light m-1 dropdown-toggle"
+                        type="button">
+                    <span class="gw-user-avatar-wrapper">
+                        <img [src]="user.getAvatarUrl()">
+                        <span class="gw-user-rating" [attr.data-level]="getUserLevel()"
+                              [title]="getFormattedUserLevel()"></span>
+                    </span>
+                    {{user.username}}
+                </button>
+                <div (click)="toggleMenuItem(MenuItem.User, false)"
+                     class="dropdown-menu dropdown-menu-right"
+                     [class.show]="isMenuItemActive(MenuItem.User)">
+                    <a routerLink="account" class="dropdown-item"
+                       translate="i18n.COMMON.ACCOUNT"></a>
+                    <a routerLink="account/stats" class="dropdown-item"
+                       translate="i18n.COMMON.STATISTICS"></a>
+                    <a (click)="signOut()" class="dropdown-item"
+                       translate="i18n.COMMON.SIGN_OUT"></a>
+                </div>
+            </div>
+
+            <div *ngIf="isGuest" (click)="signOut()" class="btn btn-primary m-1" tabindex="0"
+                 translate="i18n.COMMON.SIGN_OUT"></div>
+        </ng-container>
+
+        <ng-template #unathorizedMenu>
+            <div routerLink="auth/signup" class="btn btn-primary m-1" tabindex="0"
+                 translate="i18n.COMMON.SIGN_UP"></div>
+            <div routerLink="auth/signin" class="btn btn-secondary light m-1" tabindex="0"
+                 translate="i18n.COMMON.SIGN_IN"></div>
+        </ng-template>
+    </div>
+</div>

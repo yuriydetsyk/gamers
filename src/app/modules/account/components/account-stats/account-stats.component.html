@@ -1,0 +1,37 @@
+<div class="d-flex flex-column p-4 gw-account-stats">
+    <h4 translate="i18n.COMMON.STATISTICS"></h4>
+
+    <div *ngIf="rating" class="d-flex align-items-center">
+        <div class="d-flex flex-column justify-content-around px-3 mb-3">
+            <span class="gw-user-rating" [attr.data-level]="rating.level"
+                  [title]="getFormattedUserLevel(rating.level)"></span>
+            <span class="font-weight-bold text-primary text-center">{{getFormattedUserLevel(rating.level)}}</span>
+        </div>
+
+        <div class="d-flex flex-column flex-grow-1 gw-form">
+            <div class="d-flex justify-content-between col-md-6 text-center">
+                <div class="form-group w-50">
+                    <label for="gamesPlayed" translate="i18n.COMMON.GAMES_PLAYED"></label>
+                    <p class="font-weight-bold" id="gamesPlayed">{{rating.gamesPlayed}}</p>
+                </div>
+
+                <div class="form-group w-50">
+                    <label for="winRate" translate="i18n.COMMON.WIN_RATE"></label>
+                    <p class="font-weight-bold" id="winRate">{{getWinRate() | percent}}</p>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between col-md-6 text-center">
+                <div class="form-group w-50">
+                    <label for="wins" translate="i18n.COMMON.WINS"></label>
+                    <p class="font-weight-bold" id="wins">{{rating.wins}}</p>
+                </div>
+
+                <div class="form-group w-50">
+                    <label for="losses" translate="i18n.COMMON.LOSSES"></label>
+                    <p class="font-weight-bold" id="losses">{{rating.losses}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

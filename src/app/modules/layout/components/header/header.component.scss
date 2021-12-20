@@ -1,0 +1,41 @@
+@import '../../../../../styles/partials/colors';
+@import '../../../../../styles/partials/breakpoints';
+
+.gw-header-container {
+    .btn:not(.btn-flex) {
+        min-width: 110px;
+    }
+
+    .gw-logo-wrapper {
+        cursor: pointer;
+
+        .gw-logo {
+            height: 50px;
+        }
+
+        .gw-website-title {
+            font-weight: bold;
+            text-transform: uppercase;
+            margin: 0 0 0 5px;
+
+            @include md-down() {
+                display: none;
+            }
+        }
+
+        &:hover {
+            .gw-website-title {
+                color: $color-yellowish-light;
+            }
+        }
+    }
+
+    .gw-user-avatar-wrapper {
+        .gw-user-rating {
+            border-left: none;
+            border-right: 2px solid $color-yellowish-light;
+            border-top: 1px solid $color-yellowish-light;
+            border-bottom: 1px solid $color-yellowish-light;
+        }
+    }
+}

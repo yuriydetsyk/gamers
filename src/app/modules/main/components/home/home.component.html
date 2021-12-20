@@ -1,0 +1,14 @@
+<div class="d-flex flex-column justify-content-center align-items-stretch h-100 m-auto gw-form">
+    <div routerLink="games" class="btn btn-primary btn-lg m-2" tabindex="0"
+         translate="i18n.COMMON.PLAY_GAMES"></div>
+    <div class="d-flex justify-content-between">
+        <div *ngIf="!isLogged" routerLink="auth/signin" class="btn btn-secondary light btn-lg m-2"
+             tabindex="0" translate="i18n.COMMON.SIGN_IN"></div>
+        <div *ngIf="!isLogged" routerLink="auth/signup" class="btn btn-secondary light btn-lg m-2"
+             tabindex="0" translate="i18n.COMMON.SIGN_UP"></div>
+        <div *ngIf="isLogged" routerLink="account"
+             class="btn btn-secondary light btn-lg m-2 flex-grow-1" tabindex="0"
+             translate="i18n.COMMON.ACCOUNT"></div>
+    </div>
+    <router-outlet></router-outlet>
+</div>

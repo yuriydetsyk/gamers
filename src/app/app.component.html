@@ -1,0 +1,23 @@
+<div class="d-flex flex-column justify-content-between min-vh-100">
+    <gw-loading></gw-loading>
+
+    <gw-header *ngIf="showHeader"></gw-header>
+
+    <div class="d-flex flex-grow-1">
+        <gw-sidebar *ngIf="showSidebar"></gw-sidebar>
+
+        <div class="d-flex flex-grow-1 gw-main-wrapper">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+
+    <gw-footer *ngIf="showFooter"></gw-footer>
+
+    <ng-container *ngIf="lastNotification">
+        <div class="alert gw-notification" [ngClass]="getNotificationClass(lastNotification)">
+            <p class="font-weight-bold mb-0">{{getStrippedContent(lastNotification.message)}}</p>
+            <pre class="mb-0"
+                 *ngIf="lastNotification.stack">{{getStrippedContent(lastNotification.stack)}}</pre>
+        </div>
+    </ng-container>
+</div>

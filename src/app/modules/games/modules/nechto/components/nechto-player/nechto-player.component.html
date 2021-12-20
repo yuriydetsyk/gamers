@@ -1,0 +1,143 @@
+<div class="d-flex m-2">
+    <ng-container *ngIf="!isGameMode || hasPlayer" [ngTemplateOutlet]="playerBorderCards"
+                  [ngTemplateOutletContext]="{ direction: Direction.CounterClockwise }">
+    </ng-container>
+
+    <div class="d-flex flex-column justify-content-between card smth-player"
+         *ngIf="!isGameMode || hasPlayer" [ngClass]="{
+            'active': hasPlayer,
+            'taking-step': isTakingStep(true),
+            'destroyed': isInactive,
+            'bot': isBot,
+            'infected': hasPlayer && isIt && (canSeeIt || isGameFinished)
+        }">
+
+        <div class="d-flex flex-column justify-content-between card-body">
+            <h5 class="d-flex justify-content-between align-items-center smth-player-panel"
+                [ngClass]="{'pl-4': hasPlayer && showUserLevels}">
+                <span *ngIf="hasPlayer && showUserLevels" class="gw-user-rating"
+                      [attr.data-level]="getUserLevel(user.id)"
+                      [title]="getFormattedUserLevel(user.id)"></span>
+                <span *ngIf="hasPlayer" class="text-truncate"
+                      [title]="user.username">{{user.username}}</span>
+                <span *ngIf="!hasPlayer">{{'i18n.COMMON.SLOT' | translate}} #{{playerId}}</span>
+                <div class="d-flex align-items-center"
+                     *ngIf="hasCurrentPlayer && !hasBlockedStream">
+                    <i [ngClass]="!isVideoMuted ? 'smth-video-enabled' : 'smth-video-disabled'"
+                       class="material-icons" (click)="toggleVideo()"
+                       title="{{(!isVideoMuted ? 'i18n.TOOLTIPS.CLICK_TO_DISABLE_VIDEO' : 'i18n.TOOLTIPS.CLICK_TO_ENABLE_VIDEO') | translate}}">videocam_off</i>
+
+                    <i [ngClass]="!isAudioMuted ? 'smth-audio-enabled' : 'smth-audio-disabled'"
+                       class="material-icons" (click)="toggleAudio()"
+                       title="{{(!isAudioMuted ? 'i18n.TOOLTIPS.CLICK_TO_MUTE' : 'i18n.TOOLTIPS.CLICK_TO_UNMUTE') | translate}}">volume_off</i>
+
+                    <i class="material-icons" [matMenuTriggerFor]="settingsMenu"
+                       title="{{'i18n.COMMON.SETTINGS' | translate}}">settings</i>
+
+                    <mat-menu #settingsMenu="matMenu">
+                        <button mat-menu-item [matMenuTriggerFor]="videoMenu"
+                                translate="i18n.COMMON.SELECT_VIDEO_TRACK"
+                                *ngIf="videoTracks.length"></button>
+                        <button mat-menu-item [matMenuTriggerFor]="audioMenu"
+                                translate="i18n.COMMON.SELECT_AUDIO_TRACK"
+                                *ngIf="audioTracks.length"></button>
+                        <mat-checkbox class="mat-menu-item" [ngModel]="isFullScreenMode"
+                                      (ngModelChange)="toggleFullScreenMode($event)">
+                            {{'i18n.COMMON.FULLSCREEN_VIDEO' | translate}}</mat-checkbox>
+                        <mat-checkbox class="mat-menu-item" [ngModel]="showUserLevels"
+                                      (ngModelChange)="toggleUserLevels($event)">
+                            {{'i18n.COMMON.SHOW_LEVELS' | translate}}</mat-checkbox>
+                        <mat-checkbox class="mat-menu-item" [ngModel]="hasAudioEffects"
+                                        (ngModelChange)="toggleAudioEffects($event)">
+                            {{'i18n.COMMON.AUDIO_EFFECTS' | translate}}</mat-checkbox>
+                    </mat-menu>
+
+                    <mat-menu #videoMenu="matMenu">
+                        <button mat-menu-item *ngFor="let option of videoTracks"
+                                (click)="setVideoTrack(option.id)">{{option.label}}</button>
+                    </mat-menu>
+
+                    <mat-menu #audioMenu="matMenu">
+                        <button mat-menu-item *ngFor="let option of audioTracks"
+                                (click)="setAudioTrack(option.id)">{{option.label}}</button>
+                    </mat-menu>
+                </div>
+            </h5>
+
+            <ng-container *ngIf="hasPlayer">
+                <div class="flex-grow-1 d-flex justify-content-center align-items-center smth-player-wrapper"
+                     [ngClass]="{'smth-player-fullscreen': isFullScreenMode}">
+                    <video *ngIf="hasStream && (isVideoEnabled || isVideoMuted)"
+                           [srcObject]="playerStream" [muted]="hasCurrentPlayer || isAudioMuted" autoplay
+                           playsinline class="smth-player-video"
+                           [ngClass]="{'d-none': isVideoMuted}"></video>
+                    <div *ngIf="!hasStream || isVideoMuted"
+                         [style.background-image]="backgroundImage" class="smth-player-thumbnail">
+                    </div>
+                </div>
+            </ng-container>
+
+            <div class="smth-player-actions">
+                <div (click)="takePlace()" class="btn btn-primary mt-1" *ngIf="canTakePlace"
+                     translate="i18n.GAME.TAKE_PLACE"></div>
+                <div (click)="leavePlace()" class="btn btn-primary mt-1"
+                     *ngIf="hasCurrentPlayer && (!isGameMode || isGameFinished || isInactive)"
+                     translate="i18n.GAME.LEAVE_PLACE"></div>
+            </div>
+        </div>
+
+        <div class="d-flex flex-wrap flex-shrink-0 smth-player-cards"
+             [ngClass]="{
+                'smth-player-cards-visible': canSeeCards,
+                'smth-player-cards-bot': isBotPlaying && isPickMode
+             }"
+             *ngIf="isGameMode && (hasCurrentPlayer || canSeeCards || canSeeBotCards)">
+
+            <ng-container *ngIf="hasCards; else emptyHand">
+                <gw-nechto-card *ngFor="let card of handCards" [card]="card"
+                                [isClickable]="!isBotPlaying" [location]="CardLocation.Hand">
+                </gw-nechto-card>
+            </ng-container>
+
+            <ng-template #emptyHand>
+                <div
+                     class="d-flex flex-grow-1 justify-content-center align-items-center text-uppercase">
+                    <h5 translate="i18n.GAME.EMPTY_HAND"></h5>
+                </div>
+            </ng-template>
+        </div>
+
+        <div class="d-none justify-content-center smth-player-actions-extra"
+             *ngIf="hasExtraActions">
+            <div (click)="showCards(true)" class="btn btn-primary btn-icon mx-1"
+                 title="{{'i18n.GAME.SHOW_ALL_CARDS' | translate}}" *ngIf="canShowCards">
+                <i class="material-icons">done_all</i>
+            </div>
+            <div (click)="showCards(false)" class="btn btn-primary btn-icon mx-1"
+                 title="{{'i18n.GAME.SHOW_INFECTION_CARD' | translate}}"
+                 *ngIf="canShowCards && canShowInfection">
+                <i class="material-icons">done</i>
+            </div>
+            <div (click)="skipShowingCards()" class="btn btn-primary btn-icon mx-1"
+                 title="{{'i18n.GAME.SKIP_SHOWING_CARDS' | translate}}" *ngIf="canShowCards">
+                <i class="material-icons">block</i>
+            </div>
+            <div (click)="acceptRequest()" class="btn btn-primary btn-icon mx-1"
+                 title="{{'i18n.GAME.ACCEPT_REQUEST' | translate}}" *ngIf="canAcceptRequest">
+                <i class="material-icons">done</i>
+            </div>
+        </div>
+    </div>
+
+    <ng-container *ngIf="!isGameMode || hasPlayer" [ngTemplateOutlet]="playerBorderCards"
+                  [ngTemplateOutletContext]="{ direction: Direction.Clockwise }"></ng-container>
+</div>
+
+<ng-template #playerBorderCards let-direction="direction">
+    <div class="d-flex flex-column justify-content-center align-items-center flex-wrap smth-border-cards"
+         *ngIf="game">
+        <gw-nechto-card *ngFor="let card of getFilteredBorderCards(direction)" [card]="card"
+                        [isClickable]="!isBotPlaying" [location]="CardLocation.Border">
+        </gw-nechto-card>
+    </div>
+</ng-template>

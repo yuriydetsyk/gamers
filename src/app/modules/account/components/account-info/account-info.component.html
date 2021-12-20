@@ -1,0 +1,69 @@
+<div class="d-flex flex-column p-4 gw-account-info">
+    <h4 translate="i18n.COMMON.ACCOUNT"></h4>
+
+    <div *ngIf="user" class="d-flex align-items-center">
+        <div class="d-flex flex-column px-3">
+            <img class="form-group avatar" [src]="user.getAvatarUrl()">
+            <div class="form-group">
+                <label for="avatarFile" class="btn btn-primary"
+                       translate="i18n.COMMON.CHOOSE_AVATAR"></label>
+                <input type="file" id="avatarFile" (change)="uploadAvatar($event.target.files)"
+                       accept="image/*" #avatarUpload>
+            </div>
+        </div>
+
+        <div [formGroup]="form" class="d-flex flex-grow-1 gw-form">
+            <div class="d-flex flex-column align-items-stretch col-md-6">
+                <div class="form-group">
+                    <label for="email" translate="i18n.COMMON.EMAIL_ADDRESS"></label>
+                    <input formControlName="email" type="email" class="form-control" id="email"
+                           placeholder="{{'i18n.PLACEHOLDERS.EMAIL' | translate}}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="username" translate="i18n.COMMON.USERNAME"></label>
+                    <input formControlName="username" type="text" class="form-control" id="username"
+                           placeholder="{{'i18n.PLACEHOLDERS.USERNAME' | translate}}...">
+                </div>
+
+                <div class="form-group">
+                    <label for="firstName" translate="i18n.COMMON.FIRST_NAME"></label>
+                    <input formControlName="firstName" type="text" class="form-control"
+                           id="firstName"
+                           placeholder="{{'i18n.PLACEHOLDERS.FIRST_NAME' | translate}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="lastName" translate="i18n.COMMON.LAST_NAME"></label>
+                    <input formControlName="lastName" type="text" class="form-control" id="lastName"
+                           placeholder="{{'i18n.PLACEHOLDERS.LAST_NAME' | translate}}">
+                </div>
+            </div>
+
+            <div class="d-flex flex-column align-items-stretch col-md-6">
+                <div class="form-group">
+                    <label for="gender" translate="i18n.COMMON.GENDER"></label>
+                    <select formControlName="gender" class="form-control" id="gender">
+                        <option disabled selected translate="i18n.PLACEHOLDERS.GENDER"></option>
+                        <option [value]="Gender.Male" translate="i18n.COMMON.MALE"></option>
+                        <option [value]="Gender.Female" translate="i18n.COMMON.FEMALE"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="biography" translate="i18n.COMMON.BIOGRAPHY"></label>
+                    <textarea formControlName="biography" class="form-control" id="biography"
+                              rows="9"
+                              placeholder="{{'i18n.PLACEHOLDERS.BIOGRAPHY' | translate}}"></textarea>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-start col-12">
+                <div [class.disabled]="!form.valid" (click)="save()" class="btn btn-primary mr-2"
+                     tabindex="0" translate="i18n.COMMON.SAVE"></div>
+                <div (click)="reset()" class="btn btn-secondary" tabindex="0"
+                     translate="i18n.COMMON.RESET"></div>
+            </div>
+        </div>
+    </div>
+</div>

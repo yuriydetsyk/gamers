@@ -1,0 +1,23 @@
+@import '../../../../styles/partials/colors';
+
+.gw-game-info {
+    .gw-game-banner {
+        background-color: $color-black;
+        background-size: 100% auto;
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 5px;
+        color: $color-white;
+
+        &-nechto {
+            background-image: url('../../../../assets/images/games/nechto/game-nechto-banner.jpg');
+        }
+
+        .gw-game-description {
+            background-color: $color-bg-yellow-transparent;
+            border-radius: 5px;
+            color: $color-black;
+            white-space: pre-line;
+        }
+    }
+}

@@ -1,0 +1,21 @@
+<div class="d-flex flex-column p-4 gw-game-info" *ngIf="game && info">
+    <h4 translate="i18n.COMMON.MAIN_INFORMATION"></h4>
+
+    <div class="gw-game-banner p-4" [ngClass]="info.bannerClass">
+        <h2>{{info.game}}</h2>
+
+        <div class="gw-game-description p-4">
+            <p class="font-weight-bold" *ngIf="info.game === Game.Nechto">
+                All rights belong to Pendragon Game Studio and Escape Studios.
+                I do not own any rights to the original product or any of its modifications.
+                The online version of the game has been created just for fun and non-commercial purposes.
+            </p>
+
+            {{getMultilineText(info.description)}}
+        </div>
+
+        <div class="d-flex justify-content-end mt-4 gw-game-nav-panel">
+            <a class="btn btn-primary" [href]="info.manualUrl" target="_blank">{{'i18n.COMMON.OPEN_MANUAL' | translate}} (PDF)</a>
+        </div>
+    </div>
+</div>

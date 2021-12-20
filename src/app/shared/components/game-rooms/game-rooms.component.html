@@ -1,0 +1,94 @@
+<div class="d-flex flex-column flex-grow-1 p-4 gw-game-rooms">
+    <h4 translate="i18n.ROOMS.CREATE_NEW_ROOM"></h4>
+    <div [formGroup]="form" class="d-flex flex-column">
+        <div class="d-flex">
+            <div class="d-flex flex-column">
+                <div class="d-flex">
+                    <div class="form-group mr-2 flex-grow-1">
+                        <label for="name" translate="i18n.COMMON.NAME"></label>
+                        <input matInput type="text" formControlName="name" class="form-control"
+                               placeholder="{{'i18n.PLACEHOLDERS.ROOM_NAME' | translate}}">
+                    </div>
+
+                    <div class="form-group mr-2 w-30">
+                        <label for="maxQuantity" translate="i18n.ROOMS.MAX_PLAYERS"></label>
+                        <!-- <input matInput type="number" formControlName="maxQuantity"
+                               class="form-control"> -->
+                        <mat-slider formControlName="maxQuantity" thumbLabel color="primary"
+                                    [min]="getMinPlayersQty()" [max]="getMaxPlayersQty()">
+                        </mat-slider>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-column mb-3">
+                    <mat-checkbox formControlName="hasRandomStartingPlayer">
+                        {{'i18n.ROOMS.HAS_RANDOM_STARTING_PLAYER' | translate}}
+                    </mat-checkbox>
+
+                    <mat-checkbox formControlName="hasCardsBasedOnQuantity">
+                        {{'i18n.ROOMS.HAS_CARDS_BASED_ON_QUANTITY' | translate}}
+                    </mat-checkbox>
+                </div>
+            </div>
+
+            <div class="form-group flex-grow-1 d-flex flex-column">
+                <label for="description" translate="i18n.COMMON.DESCRIPTION"></label>
+                <textarea formControlName="description" class="form-control flex-grow-1" rows="3"
+                          placeholder="{{'i18n.PLACEHOLDERS.ROOM_DESCRIPTION' | translate}}"></textarea>
+            </div>
+        </div>
+
+        <div class="d-flex">
+            <button (click)="addRoom()" class="btn btn-primary" tabindex="0"
+                    [disabled]="form.invalid" translate="i18n.ROOMS.ADD_ROOM"></button>
+        </div>
+    </div>
+
+    <h4 class="mt-5" translate="i18n.ROOMS.JOIN_AVAILABLE_ROOMS"></h4>
+    <ul class="list-group" *ngIf="rooms.length; else noRooms">
+        <li class="list-group-item d-flex justify-content-stretch align-items-center gw-room"
+            *ngFor="let room of rooms">
+            <div class="d-flex flex-column flex-grow-1" [title]="room.description || ''">
+                <p class="font-weight-bold">#{{room.id}}: {{room.name}}</p>
+                <p *ngIf="room.description">{{'i18n.COMMON.DESCRIPTION' | translate}}:
+                    {{room.description}}</p>
+            </div>
+
+            <div class="material-icons gw-room-icon"
+                 title="{{'i18n.ROOMS.HAS_RANDOM_STARTING_PLAYER' | translate}}"
+                 *ngIf="room.hasRandomStartingPlayer">
+                supervised_user_circle
+            </div>
+
+            <div class="material-icons gw-room-icon"
+                 title="{{'i18n.ROOMS.HAS_CARDS_BASED_ON_QUANTITY' | translate}}"
+                 *ngIf="room.hasCardsBasedOnQuantity">
+                style
+            </div>
+
+            <div class="d-flex">
+                <p class="font-weight-bold px-2 text-nowrap">
+                    {{'i18n.COMMON.PLAYERS' | translate}}:
+                    [<span class="gw-room-players">{{getPlayersQty(room.id)}} /
+                        {{getMaxPlayersQty(room)}}</span>]
+                </p>
+            </div>
+
+            <div *ngIf="isRoomOwner(room.id) && !room.isGameMode" (click)="deleteRoom(room.id)"
+                 class="btn btn-danger btn-icon mr-2" tabindex="0">
+                <i class="material-icons">delete</i>
+            </div>
+
+            <div *ngIf="!room.isGameMode" (click)="joinRoom(room.id)" class="btn btn-primary"
+                 tabindex="0" translate="i18n.ROOMS.JOIN_ROOM"></div>
+
+            <div *ngIf="room.isGameMode" class="btn btn-dark disabled">
+                {{(!isGameFinished(room.id) ? 'i18n.GAME.GAME_STARTED' : 'i18n.GAME.GAME_FINISHED') | translate}}
+            </div>
+        </li>
+    </ul>
+
+    <ng-template #noRooms>
+        <div class="alert alert-warning" role="alert" translate="i18n.ROOMS.NO_ROOMS_CREATED"></div>
+    </ng-template>
+</div>

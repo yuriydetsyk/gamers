@@ -1,0 +1,92 @@
+<div
+     class="d-flex flex-column justify-content-between align-items-stretch text-center h-100 gw-rating">
+    <mat-spinner class="align-self-center m-4 gw-rating-loading" *ngIf="isLoading"></mat-spinner>
+
+    <ng-container *ngIf="isMissingData">
+        <div class="alert alert-warning m-4" role="alert" translate="i18n.RATING.RATING_EMPTY">
+        </div>
+    </ng-container>
+
+    <div class="gw-rating-wrapper">
+        <table mat-table [dataSource]="data" class="w-100 gw-rating-table" matSort
+               matSortActive="ratingId" [ngClass]="{'d-none': isMissingData}">
+            <ng-container matColumnDef="index">
+                <th mat-header-cell *matHeaderCellDef class="text-center"
+                    translate="i18n.COMMON.PLACE"></th>
+                <td mat-cell *matCellDef="let i = index">
+                    <span class="font-weight-bold">#{{getPlace(i)}}</span>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="user">
+                <th mat-header-cell *matHeaderCellDef class="pl-3" translate="i18n.COMMON.USER">
+                </th>
+                <td mat-cell *matCellDef="let row">
+                    <div class="d-flex align-items-center">
+                        <div class="m-1 gw-user-avatar"
+                             [style.background-image]="getAvatarUrl(row)"></div>
+                        <span>{{row.user.username}}</span>
+                    </div>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="xp">
+                <th mat-header-cell *matHeaderCellDef class="text-center">XP</th>
+                <td mat-cell *matCellDef="let row">
+                    <span class="font-weight-bold text-primary">{{row.xp}}</span>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="level">
+                <th mat-header-cell *matHeaderCellDef class="text-center"
+                    translate="i18n.COMMON.LEVEL"></th>
+                <td mat-cell *matCellDef="let row">
+                    <div class="d-flex align-items-center">
+                        <span class="gw-user-rating mr-1" [attr.data-level]="row.level"
+                              [title]="getFormattedUserLevel(row.level)"></span>
+                        <span
+                              class="font-weight-bold text-primary">{{getFormattedUserLevel(row.level)}}</span>
+                    </div>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="games">
+                <th mat-header-cell *matHeaderCellDef class="text-center"
+                    translate="i18n.COMMON.GAMES_PLAYED"></th>
+                <td mat-cell *matCellDef="let row">
+                    <span>{{row.gamesPlayed}}</span>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="wins">
+                <th mat-header-cell *matHeaderCellDef class="text-center"
+                    translate="i18n.COMMON.WINS"></th>
+                <td mat-cell *matCellDef="let row">
+                    <span>{{row.wins}}</span>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="losses">
+                <th mat-header-cell *matHeaderCellDef class="text-center"
+                    translate="i18n.COMMON.LOSSES"></th>
+                <td mat-cell *matCellDef="let row">
+                    <span>{{row.losses}}</span>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="winRate">
+                <th mat-header-cell *matHeaderCellDef class="text-center"
+                    translate="i18n.COMMON.WIN_RATE"></th>
+                <td mat-cell *matCellDef="let row">
+                    <span class="font-weight-bold">{{getWinRate(row) | percent}}</span>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+
+    <mat-paginator [length]="dataLength" [pageSize]="30" [ngClass]="{'d-none': isMissingData}">
+    </mat-paginator>
+</div>

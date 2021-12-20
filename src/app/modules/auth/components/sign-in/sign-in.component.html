@@ -1,0 +1,23 @@
+<div [formGroup]="form"
+     class="d-flex flex-column justify-content-center align-items-stretch h-100 m-auto gw-form">
+    <div class="form-group m-2">
+        <label for="email" class="light" translate="i18n.COMMON.EMAIL_ADDRESS"></label>
+        <input formControlName="email" type="email" class="form-control" id="email"
+               placeholder="{{'i18n.PLACEHOLDERS.EMAIL' | translate}}">
+    </div>
+
+    <div class="form-group m-2">
+        <label for="password" class="light" translate="i18n.COMMON.PASSWORD"></label>
+        <input formControlName="password" type="password" class="form-control" id="password"
+               placeholder="{{'i18n.PLACEHOLDERS.PASSWORD' | translate}}">
+    </div>
+
+    <div class="d-flex">
+        <div [class.disabled]="!form.valid" (click)="signIn()"
+             class="btn btn-primary m-2 flex-grow-1" tabindex="0" translate="i18n.COMMON.SIGN_IN">
+        </div>
+        <div (click)="openForgotPasswordModal()" class="btn btn-link light light m-2" tabindex="0">
+            {{'i18n.COMMON.FORGOT_PASSWORD' | translate}}?
+        </div>
+    </div>
+</div>

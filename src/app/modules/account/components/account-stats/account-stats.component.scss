@@ -1,0 +1,21 @@
+@import '../../../../../styles/partials/colors';
+
+.gw-account-stats {
+    background-color: $color-bg-light;
+    height: calc(100% - 45px);
+
+    .gw-user-rating {
+        background-size: auto;
+        background-position: center;
+        width: 180px;
+        height: 180px;
+    }
+
+    .gw-form {
+        .form-group {
+            p {
+                margin: 0;
+            }
+        }
+    }
+}

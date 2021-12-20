@@ -1,0 +1,121 @@
+<div class="d-flex flex-column align-items-stretch gw-sidebar-wrapper"
+     [ngClass]="{'opened': isOpened}">
+    <div class="d-flex p-2 gw-sidebar-toggler">
+        <div class="btn btn-primary" (click)="toggleSidebar()">
+            <i class="material-icons">
+                menu
+            </i>
+        </div>
+    </div>
+
+    <div class="p-2 mt-5 gw-sidebar-content" *ngIf="isOpened">
+        <div class="d-flex flex-column">
+            <div *ngIf="isRoomOwner || isBotManager">
+                <h5 class="mt-3 border-bottom border-secondary"
+                    translate="i18n.COMMON.MANAGEMENT_ROLES"></h5>
+                <ul class="m-0 pl-4">
+                    <li class="font-weight-bold" *ngIf="isRoomOwner"
+                        translate="i18n.ROLES.ROOM_ADMINISTRATOR"></li>
+                    <li class="font-weight-bold" *ngIf="isBotManager"
+                        translate="i18n.ROLES.BOT_MANAGER"></li>
+                </ul>
+            </div>
+
+            <ng-container *ngIf="!!selectedRoom">
+                <div>
+                    <h5 class="mt-3 border-bottom border-secondary"
+                        translate="i18n.COMMON.ROOM_INFORMATION"></h5>
+
+                    <div class="d-flex flex-column flex-grow-1"
+                        [title]="selectedRoom.description || ''">
+                        <span class="font-weight-bold">#{{selectedRoom.id}}: {{selectedRoom.name}}</span>
+                        <span class="font-italic text-justify" *ngIf="selectedRoom.description">{{selectedRoom.description}}</span>
+                    </div>
+
+                    <div *ngIf="!!roomCreator">
+                        <span class="mr-1">{{'i18n.COMMON.CREATOR' | translate}}:</span>
+                        <span class="font-weight-bold">{{roomCreator}}</span>
+                    </div>
+
+                    <div *ngIf="!!roomOwner">
+                        <span class="mr-1">{{'i18n.COMMON.ADMINISTRATOR' | translate}}:</span>
+                        <span class="font-weight-bold">{{roomOwner}}</span>
+                    </div>
+                </div>
+
+                <div *ngIf="canLeaveRoom">
+                    <h5 class="mt-3 border-bottom border-secondary"
+                        translate="i18n.COMMON.ROOM_SETTINGS"></h5>
+
+                    <div (click)="leaveRoom()" class="btn btn-primary"
+                         translate="i18n.GAME.LEAVE_ROOM">
+                    </div>
+                </div>
+            </ng-container>
+
+            <div *ngIf="isRoomOwner && (canStartGame || isGameMode)">
+                <h5 class="mt-3 border-bottom border-secondary"
+                    translate="i18n.COMMON.GAME_SETTINGS"></h5>
+
+                <ng-container *ngIf="canStartGame">
+                    <div class="btn btn-primary mb-2" (click)="startGame()"
+                         translate="i18n.COMMON.START_GAME"></div>
+                </ng-container>
+
+                <ng-container *ngIf="isGameMode">
+                    <div class="btn btn-primary mb-2" (click)="stopGame()" *ngIf="!isGameFinished"
+                         translate="i18n.GAME.STOP_GAME"></div>
+                    <div class="btn btn-primary mb-2" (click)="restartGame()"
+                         translate="i18n.GAME.RESTART_GAME"></div>
+                    <div class="btn btn-primary mb-2" (click)="endGame()"
+                         translate="i18n.GAME.STOP_AND_KICK_ALL"></div>
+
+                    <div class="btn btn-secondary mb-2" [matMenuTriggerFor]="quarantineMenu"
+                         *ngIf="quarantineOptions.length" translate="i18n.GAME.PUT_ON_QUARANTINE">
+                    </div>
+                    <div class="btn btn-secondary mb-2" [matMenuTriggerFor]="lockedDoorMenu"
+                         *ngIf="lockedDoorOptions.length" translate="i18n.GAME.SET_LOCKED_DOOR">
+                    </div>
+
+                    <mat-menu #quarantineMenu="matMenu">
+                        <button mat-menu-item (click)="putOnQuarantine(playerId)"
+                                *ngFor="let playerId of quarantineOptions">{{'i18n.COMMON.PLAYER' | translate}}
+                            #{{playerId}}</button>
+                    </mat-menu>
+
+                    <mat-menu #lockedDoorMenu="matMenu">
+                        <button mat-menu-item (click)="setLockedDoor(option)"
+                                *ngFor="let option of lockedDoorOptions; trackBy: trackLockedDoorOptions">
+                            {{'i18n.COMMON.FROM' | translate}} #{{option.fromId}}
+                            {{'i18n.COMMON.TO' | translate}} #{{option.toId}}
+                        </button>
+                    </mat-menu>
+                </ng-container>
+            </div>
+
+            <div *ngIf="isBotManager">
+                <ng-container *ngIf="!isGameMode">
+                    <h5 class="mt-3 border-bottom border-secondary"
+                        translate="i18n.COMMON.BOT_SETTINGS"></h5>
+
+                    <div class="btn btn-dark mb-2" [matMenuTriggerFor]="addBotMenu"
+                         translate="i18n.GAME.ADD_BOT"></div>
+                    <div class="btn btn-dark" [matMenuTriggerFor]="removeBotMenu"
+                         translate="i18n.GAME.REMOVE_BOT"></div>
+
+                    <mat-menu #addBotMenu="matMenu">
+                        <button mat-menu-item (click)="addBot(place)"
+                                *ngFor="let place of availableAddPlaces">{{'i18n.COMMON.PLACE' | translate}}
+                            #{{place}}</button>
+                    </mat-menu>
+
+                    <mat-menu #removeBotMenu="matMenu">
+                        <button mat-menu-item (click)="removeBot(place)"
+                                *ngFor="let place of availableRemovePlaces">{{'i18n.COMMON.PLACE' | translate}}
+                            #{{place}}</button>
+                    </mat-menu>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+PC:
+
+
+MOBILE:
+- incorrect tooltip positioning on card hover
+- incorrect menu positioning on card click
+- both hover and click on touch (hard to use)
+- tooltip not hiding after taking a deck card
+
+GENERAL:
+- need to add 5 last steps for debugging purposes
+
+TEST:
+- card hover tooltip overflows page limits [NOT SURE]
+- BUG: after player swapping, videos will become duplicated for both players, but not others [ADDED FIX, NEEDS VERIFICATION]
+- player can have too many cards [?]
+- fix 'It' border
+- video drops sometimes
+- add ability to stop / restart the game without leaving
+- reassign room owner on leave
+- Error: Missing active event card
+    at CardService.giveHandCard (card.service.ts:1791)
+    at BotService.processBotStep (bot.service.ts:230)
+    // If card accepts regular workflow - back to the requester with regular swap
+    const activeEventCard = this.gameService.getActiveEventCard();
+    if (isNil(activeEventCard)) {
+        throw new Error('Missing active event card');
+    }
+
+BUGS:
+- when playing counter-clockwise, locked door is placed to the wrong side / player (UI)
+- Nechto border image is not visible (UI)
+- recommended (add ability to accept / defence with submit, currently only defence and auto-accept)
+- player could not return the card back when answering to card exchange by 'Soblazn'
+- after the bug, other players can also play on themselves
+- after playing 'Persistence', panic card was added to the table
+
+REFACTORING:
+- optimize canPlay, canGive, canDrop, canTake & receivingPlayers
