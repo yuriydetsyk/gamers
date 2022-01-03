@@ -1,19 +1,14 @@
 {
   "name": "gamers-website",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Interactive WebRTC Application for Gamers",
-  "repository": {
-    "type": "git",
-    "url": "https://gamersorg@dev.azure.com/gamersorg/Gamers/_git/Gamers"
-  },
   "keywords": [
     "gamers",
     "gamersorg",
     "chunkup",
     "yuriyd",
-    "yuronko"
+    "yuriydetsyk"
   ],
-  "author": "yuronko",
   "license": "UNLICENSED",
   "scripts": {
     "ng": "ng",
@@ -28,7 +23,8 @@
     "e2e": "ng e2e",
     "deploy:peerserver": "cd server && npm install && npm start",
     "postinstall": "ngcc",
-    "test_postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points"
+    "test_postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
+    "deploy": "npm run build:prod && echo gamers.org.ua > ./dist/CNAME && gh-pages -d dist -r https://github.com/YuriyDetsyk/gamers"
   },
   "private": true,
   "dependencies": {
@@ -73,6 +69,7 @@
     "karma-jasmine-html-reporter": "^1.5.2",
     "ts-node": "^8.8.1",
     "tslint": "~5.15.0",
-    "typescript": "~3.7.5"
+    "typescript": "~3.7.5",
+    "gh-pages": "^3.2.3"
   }
 }

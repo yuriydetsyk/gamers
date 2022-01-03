@@ -14,5 +14,5 @@
         "key": "D:/work/freelance/Gamers/certificates/localhost.key",
         "passphrase": ""
     },
-    "liveServer.settings.root": "/dist/gamers-website"
+    "liveServer.settings.root": "/dist"
 }
