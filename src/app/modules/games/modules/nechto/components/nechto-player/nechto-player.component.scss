@@ -21,7 +21,7 @@
     }
 
     &:not(.active) {
-        background-image: url('../../../../../../../assets/images/games/nechto/game-nechto.png');
+        background-image: url('/assets/images/games/nechto/game-nechto.png');
         background-size: auto 50%;
     }
 
@@ -79,7 +79,7 @@
     }
 
     &.destroyed {
-        background-image: url('../../../../../../../assets/images/cross.png');
+        background-image: url('/assets/images/cross.png');
         background-size: 100% auto;
         background-color: $color-lightgrey;
 
@@ -103,7 +103,7 @@
     }
 
     &.infected {
-        border-image-source: url('../../../../../../../assets/images/games/nechto/border-slime.png');
+        border-image-source: url('/assets/images/games/nechto/border-slime.png');
         border-image-slice: 77;
         border-image-repeat: round;
         border-width: 10px;

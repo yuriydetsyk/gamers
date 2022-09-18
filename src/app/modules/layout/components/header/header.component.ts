@@ -106,7 +106,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
 
     public getFormattedLanguageUrl(language: Language) {
-        return `./assets/images/flag-${language}.png`;
+        return `/assets/images/flag-${language}.png`;
     }
 
     public toggleAudioEffects() {

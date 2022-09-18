@@ -17,11 +17,10 @@ const server = PeerServer({
     port: 9000,
     path: '/peer',
     proxied: true,
-    debug: true,
-    ssl: {
-        key: fs.readFileSync('../certificates/localhost.key'),
-        cert: fs.readFileSync('../certificates/localhost.crt')
-    }
+    // ssl: {
+    //     key: '../certificates/localhost.key',
+    //     cert: '../certificates/localhost.crt'
+    // }
 });
 
 server.on('connection', (id) => console.log(`New Peer Connection: ${id}`));

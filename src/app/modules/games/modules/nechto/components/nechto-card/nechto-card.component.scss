@@ -36,152 +36,152 @@
             &.smth-card-back,
             &.smth-card-disabled {
                 &[data-type='event'] {
-                    background-image: url('../../../../../../../assets/images/games/nechto/cards/card-event.png');
+                    background-image: url('/assets/images/games/nechto/cards/card-event.png');
                 }
 
                 &[data-type='panic'] {
-                    background-image: url('../../../../../../../assets/images/games/nechto/cards/card-panic.png');
+                    background-image: url('/assets/images/games/nechto/cards/card-panic.png');
                 }
             }
 
             &:not(.smth-card-back):not(.smth-card-disabled) {
                 &[data-type='event'] {
                     &[data-action='flamethrower'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-event-flamethrower.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-event-flamethrower.png');
                     }
 
                     &[data-action='good-here'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-event-good-here.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-event-good-here.png');
                     }
 
                     &[data-action='infection1'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-event-infection1.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-event-infection1.png');
                     }
 
                     &[data-action='infection2'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-event-infection2.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-event-infection2.png');
                     }
 
                     &[data-action='infection3'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-event-infection3.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-event-infection3.png');
                     }
 
                     &[data-action='infection4'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-event-infection4.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-event-infection4.png');
                     }
 
                     &[data-action='no-barbecue'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-event-no-barbecue.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-event-no-barbecue.png');
                     }
 
                     &[data-action='persistence'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-event-persistence.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-event-persistence.png');
                     }
 
                     &[data-action='whiskey'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-event-whiskey.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-event-whiskey.png');
                     }
 
                     &[data-action='run-away'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-event-run-away.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-event-run-away.png');
                     }
 
                     &[data-action='swap-places'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-event-swap-places.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-event-swap-places.png');
                     }
 
                     &[data-action='quarantine'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-event-quarantine.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-event-quarantine.png');
                     }
 
                     &[data-action='locked-door'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-event-locked-door.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-event-locked-door.png');
                     }
 
                     &[data-action='axe'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-event-axe.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-event-axe.png');
                     }
 
                     &[data-action='look-around'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-event-look-around.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-event-look-around.png');
                     }
 
                     &[data-action='temptation'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-event-temptation.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-event-temptation.png');
                     }
 
                     &[data-action='analysis'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-event-analysis.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-event-analysis.png');
                     }
 
                     &[data-action='suspicion'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-event-suspicion.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-event-suspicion.png');
                     }
 
                     &[data-action='no-thanks'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-event-no-thanks.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-event-no-thanks.png');
                     }
 
                     &[data-action='miss'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-event-miss.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-event-miss.png');
                     }
 
                     &[data-action='fear'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-event-fear.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-event-fear.png');
                     }
 
                     &[data-action='it'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-event-it.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-event-it.png');
                     }
                 }
 
                 &[data-type='panic'] {
                     &[data-action='friends'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-panic-friends.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-panic-friends.png');
                     }
 
                     &[data-action='old-ropes'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-panic-old-ropes.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-panic-old-ropes.png');
                     }
 
                     &[data-action='one-two'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-panic-one-two.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-panic-one-two.png');
                     }
 
                     &[data-action='three-four'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-panic-three-four.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-panic-three-four.png');
                     }
 
                     &[data-action='confession-time'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-panic-confession-time.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-panic-confession-time.png');
                     }
 
                     &[data-action='oops'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-panic-oops.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-panic-oops.png');
                     }
 
                     &[data-action='go-away'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-panic-go-away.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-panic-go-away.png');
                     }
 
                     &[data-action='forgetfulness'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-panic-forgetfulness.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-panic-forgetfulness.png');
                     }
 
                     &[data-action='chain-reaction'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-panic-chain-reaction.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-panic-chain-reaction.png');
                     }
 
                     &[data-action='blind-date'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-panic-blind-date.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-panic-blind-date.png');
                     }
 
                     &[data-action='is-it-party'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-panic-is-it-party.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-panic-is-it-party.png');
                     }
 
                     &[data-action='between-us'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/card-panic-between-us.png');
+                        background-image: url('/assets/images/games/nechto/cards/card-panic-between-us.png');
                     }
                 }
             }
@@ -208,152 +208,152 @@
             &.smth-card-back,
             &.smth-card-disabled {
                 &[data-type='event'] {
-                    background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-event.jpg');
+                    background-image: url('/assets/images/games/nechto/cards/small/card-event.jpg');
                 }
 
                 &[data-type='panic'] {
-                    background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-panic.jpg');
+                    background-image: url('/assets/images/games/nechto/cards/small/card-panic.jpg');
                 }
             }
 
             &:not(.smth-card-back):not(.smth-card-disabled) {
                 &[data-type='event'] {
                     &[data-action='flamethrower'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-event-flamethrower.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-event-flamethrower.jpg');
                     }
 
                     &[data-action='good-here'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-event-good-here.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-event-good-here.jpg');
                     }
 
                     &[data-action='infection1'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-event-infection1.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-event-infection1.jpg');
                     }
 
                     &[data-action='infection2'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-event-infection2.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-event-infection2.jpg');
                     }
 
                     &[data-action='infection3'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-event-infection3.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-event-infection3.jpg');
                     }
 
                     &[data-action='infection4'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-event-infection4.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-event-infection4.jpg');
                     }
 
                     &[data-action='no-barbecue'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-event-no-barbecue.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-event-no-barbecue.jpg');
                     }
 
                     &[data-action='persistence'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-event-persistence.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-event-persistence.jpg');
                     }
 
                     &[data-action='whiskey'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-event-whiskey.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-event-whiskey.jpg');
                     }
 
                     &[data-action='run-away'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-event-run-away.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-event-run-away.jpg');
                     }
 
                     &[data-action='swap-places'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-event-swap-places.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-event-swap-places.jpg');
                     }
 
                     &[data-action='quarantine'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-event-quarantine.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-event-quarantine.jpg');
                     }
 
                     &[data-action='locked-door'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-event-locked-door.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-event-locked-door.jpg');
                     }
 
                     &[data-action='axe'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-event-axe.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-event-axe.jpg');
                     }
 
                     &[data-action='look-around'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-event-look-around.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-event-look-around.jpg');
                     }
 
                     &[data-action='temptation'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-event-temptation.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-event-temptation.jpg');
                     }
 
                     &[data-action='analysis'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-event-analysis.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-event-analysis.jpg');
                     }
 
                     &[data-action='suspicion'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-event-suspicion.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-event-suspicion.jpg');
                     }
 
                     &[data-action='no-thanks'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-event-no-thanks.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-event-no-thanks.jpg');
                     }
 
                     &[data-action='miss'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-event-miss.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-event-miss.jpg');
                     }
 
                     &[data-action='fear'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-event-fear.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-event-fear.jpg');
                     }
 
                     &[data-action='it'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-event-it.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-event-it.jpg');
                     }
                 }
 
                 &[data-type='panic'] {
                     &[data-action='friends'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-panic-friends.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-panic-friends.jpg');
                     }
 
                     &[data-action='old-ropes'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-panic-old-ropes.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-panic-old-ropes.jpg');
                     }
 
                     &[data-action='one-two'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-panic-one-two.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-panic-one-two.jpg');
                     }
 
                     &[data-action='three-four'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-panic-three-four.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-panic-three-four.jpg');
                     }
 
                     &[data-action='confession-time'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-panic-confession-time.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-panic-confession-time.jpg');
                     }
 
                     &[data-action='oops'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-panic-oops.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-panic-oops.jpg');
                     }
 
                     &[data-action='go-away'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-panic-go-away.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-panic-go-away.jpg');
                     }
 
                     &[data-action='forgetfulness'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-panic-forgetfulness.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-panic-forgetfulness.jpg');
                     }
 
                     &[data-action='chain-reaction'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-panic-chain-reaction.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-panic-chain-reaction.jpg');
                     }
 
                     &[data-action='blind-date'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-panic-blind-date.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-panic-blind-date.jpg');
                     }
 
                     &[data-action='is-it-party'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-panic-is-it-party.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-panic-is-it-party.jpg');
                     }
 
                     &[data-action='between-us'] {
-                        background-image: url('../../../../../../../assets/images/games/nechto/cards/small/card-panic-between-us.jpg');
+                        background-image: url('/assets/images/games/nechto/cards/small/card-panic-between-us.jpg');
                     }
                 }
             }

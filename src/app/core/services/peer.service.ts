@@ -104,7 +104,6 @@ export class PeerService implements OnDestroy {
             this.initializedPeer$ = new Subject<Peer>();
 
             const peer = new Peer(this.firebaseService.generateId(), {
-                debug: environment.peerjs.debug,
                 host: environment.peerjs.host,
                 port: environment.peerjs.port,
                 path: environment.peerjs.path,

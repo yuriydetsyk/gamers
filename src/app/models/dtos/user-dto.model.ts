@@ -20,12 +20,12 @@ export class UserDto {
             if (!!this.avatar) {
                 return this.avatar;
             } else if (this.gender === Gender.Female) {
-                return './assets/images/avatar-female.png';
+                return '/assets/images/avatar-female.png';
             } else {
-                return './assets/images/avatar-male.png';
+                return '/assets/images/avatar-male.png';
             }
         } else {
-            return './assets/images/avatar.jpg';
+            return '/assets/images/avatar.jpg';
         }
     }
 

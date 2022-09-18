@@ -1,5 +1,3 @@
-import { DebugLevel } from '../app/models/enums/debug-level.enum';
-
 export const environment = {
     production: true,
     firebase: {
@@ -12,7 +10,6 @@ export const environment = {
         appId: '1:934983022687:web:d7e995978057c10bfcc3ea'
     },
     peerjs: {
-        debug: DebugLevel.ErrorsAndWarnings,
         host: 'peer.gamers.org.ua',
         port: 443,
         path: '/peer',
@@ -42,5 +39,5 @@ export const environment = {
         }
     },
     domain: 'gamers.org.ua',
-    audioPath: './assets/audio/'
+    audioPath: '/assets/audio/'
 };

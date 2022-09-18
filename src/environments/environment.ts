@@ -1,9 +1,3 @@
-import { DebugLevel } from '../app/models/enums/debug-level.enum';
-
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
-
 export const environment = {
     production: false,
     firebase: {
@@ -16,7 +10,6 @@ export const environment = {
         appId: '1:934983022687:web:d7e995978057c10bfcc3ea'
     },
     peerjs: {
-        debug: DebugLevel.ErrorsAndWarnings,
         host: 'peer.gamers.org.ua',
         port: 443,
         path: '/peer',
@@ -46,7 +39,7 @@ export const environment = {
         }
     },
     domain: 'localhost:4300',
-    audioPath: './assets/audio/'
+    audioPath: '/assets/audio/'
 };
 
 /*

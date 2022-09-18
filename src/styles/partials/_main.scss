@@ -31,7 +31,7 @@ body {
     font-size: 16px;
     margin: 0;
 
-    background-image: url('../assets/images/bg-carbon.png');
+    background-image: url('/assets/images/bg-carbon.png');
     background-size: auto;
     background-repeat: repeat-x;
 
@@ -515,50 +515,50 @@ i[class*='material-'] {
     height: 15px;
 
     &[data-level="0"] {
-        background-image: url('../assets/images/levels/level-0.png');
+        background-image: url('/assets/images/levels/level-0.png');
     }
 
     &[data-level="1"] {
-        background-image: url('../assets/images/levels/level-1.png');
+        background-image: url('/assets/images/levels/level-1.png');
     }
 
     &[data-level="2"] {
-        background-image: url('../assets/images/levels/level-2.png');
+        background-image: url('/assets/images/levels/level-2.png');
     }
 
     &[data-level="3"] {
-        background-image: url('../assets/images/levels/level-3.png');
+        background-image: url('/assets/images/levels/level-3.png');
     }
 
     &[data-level="4"] {
-        background-image: url('../assets/images/levels/level-4.png');
+        background-image: url('/assets/images/levels/level-4.png');
     }
 
     &[data-level="5"] {
-        background-image: url('../assets/images/levels/level-5.png');
+        background-image: url('/assets/images/levels/level-5.png');
     }
 
     &[data-level="6"] {
-        background-image: url('../assets/images/levels/level-6.png');
+        background-image: url('/assets/images/levels/level-6.png');
     }
 
     &[data-level="7"] {
-        background-image: url('../assets/images/levels/level-7.png');
+        background-image: url('/assets/images/levels/level-7.png');
     }
 
     &[data-level="8"] {
-        background-image: url('../assets/images/levels/level-8.png');
+        background-image: url('/assets/images/levels/level-8.png');
     }
 
     &[data-level="9"] {
-        background-image: url('../assets/images/levels/level-9.png');
+        background-image: url('/assets/images/levels/level-9.png');
     }
 
     &[data-level="10"] {
-        background-image: url('../assets/images/levels/level-10.png');
+        background-image: url('/assets/images/levels/level-10.png');
     }
 
     &[data-level="11"] {
-        background-image: url('../assets/images/levels/level-11.png');
+        background-image: url('/assets/images/levels/level-11.png');
     }
 }

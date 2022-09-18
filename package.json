@@ -6,7 +6,6 @@
     "gamers",
     "gamersorg",
     "chunkup",
-    "yuriyd",
     "yuriydetsyk"
   ],
   "license": "UNLICENSED",
@@ -45,7 +44,7 @@
     "common-tags": "^1.8.0",
     "firebase": "^7.14.3",
     "ng2-tooltip-directive": "^2.9.20",
-    "peerjs": "^1.2.0",
+    "peerjs": "1.4.7",
     "rxjs": "^6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
