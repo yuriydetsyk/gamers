@@ -16,7 +16,10 @@
   "license": "UNLICENSED",
   "scripts": {
     "watch": "nodemon --inspect=9300 index.ts",
-    "build": "tsc -p ../tsconfig.server.json"
+    "build": "tsc -p ../tsconfig.server.json",
+    "migrate": "sequelize db:migrate",
+    "migrate:undo": "sequelize db:migrate:undo",
+    "migrate:undo:all": "sequelize db:migrate:undo:all"
   },
   "dependencies": {
     "peer": "0.6.1",
