@@ -43,6 +43,7 @@
     "@ngx-translate/http-loader": "4.0.0",
     "common-tags": "1.8.0",
     "firebase": "7.14.3",
+    "ng2-tooltip-directive": "2.10.3",
     "peerjs": "1.4.7",
     "rxjs": "6.5.4",
     "tslib": "^2.0.0",
