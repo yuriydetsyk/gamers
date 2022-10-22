@@ -1,0 +1,56 @@
+version: '3.8'
+services:
+  database:
+    image: postgres:14.2-alpine
+    container_name: iconlab-database-${ICONLAB_ENV:?}
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=iconlab
+      - POSTGRES_USER=${ICONLAB_DB_USERNAME:?}
+      - POSTGRES_PASSWORD=${ICONLAB_DB_PASSWORD:?}
+      - PGUSER=${ICONLAB_DB_USERNAME:?}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - ${ICONLAB_DB_PORT:-5450}:5432
+    networks:
+      - iconlab_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    image: yuriydetsyk/icon-lab:${DEPLOY_TAG:-latest}
+    container_name: iconlab-api-${ICONLAB_ENV:?}
+    restart: unless-stopped
+    build:
+      context: ./
+      target: production
+      dockerfile: ./Dockerfile
+    environment:
+      - NODE_ENV=production
+      - ICONLAB_DB_USERNAME=${ICONLAB_DB_USERNAME:?}
+      - ICONLAB_DB_PASSWORD=${ICONLAB_DB_PASSWORD:?}
+      - ICONLAB_DB_PORT=${ICONLAB_DB_PORT:?}
+      - ICONLAB_PORT=${ICONLAB_PORT:?}
+      - ICONLAB_ENV=${ICONLAB_ENV:?}
+      - ICONLAB_SESSION_SECRET=${ICONLAB_SESSION_SECRET:?}
+      - ICONLAB_AWS_ACCESS_KEY_ID=${ICONLAB_AWS_ACCESS_KEY_ID:?}
+      - ICONLAB_AWS_SECRET_ACCESS_KEY=${ICONLAB_AWS_SECRET_ACCESS_KEY:?}
+      - ICONLAB_AWS_IMG_BUCKET=${ICONLAB_AWS_IMG_BUCKET:?}
+    ports:
+      - ${ICONLAB_PORT:-4800}:4800
+    networks:
+      - iconlab_network
+    depends_on:
+      database:
+        condition: service_healthy
+    profiles: ["production"]
+volumes:
+  pgdata:
+    name: iconlab_database_${ICONLAB_ENV:-dev}
+networks:
+  iconlab_network:
+    name: iconlab_network_${ICONLAB_ENV:-dev}

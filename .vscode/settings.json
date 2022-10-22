@@ -14,5 +14,6 @@
         "key": "D:/work/freelance/Gamers/certificates/localhost.key",
         "passphrase": ""
     },
-    "liveServer.settings.root": "/dist"
+    "liveServer.settings.root": "/dist",
+    "git.ignoreLimitWarning": true
 }
