@@ -15,7 +15,8 @@
   "author": "yuriydetsyk",
   "license": "UNLICENSED",
   "scripts": {
-    "watch": "nodemon --inspect=9300 index.ts",
+    "start": "node -r ts-node/register/transpile-only ./index.ts",
+    "watch": "nodemon --inspect=9300 ./index.ts",
     "build": "tsc -p ../tsconfig.server.json",
     "migrate": "sequelize db:migrate",
     "migrate:undo": "sequelize db:migrate:undo",
