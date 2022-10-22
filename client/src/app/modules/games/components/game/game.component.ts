@@ -1,4 +1,4 @@
-import { OnDestroy, OnInit } from '@angular/core';
+import { OnDestroy, OnInit, Directive } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, Subscription } from 'rxjs';
 
@@ -9,6 +9,7 @@ import { RoomService } from '../../../../core/services/room.service';
 import { Game } from '../../../../models/enums/game.enum';
 import { UserService } from '../../../../core/services/user.service';
 
+@Directive()
 export class GameComponent implements OnInit, OnDestroy {
     public userMedia: MediaStream;
     public selectedGame: Game;
