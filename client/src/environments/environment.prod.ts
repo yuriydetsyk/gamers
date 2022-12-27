@@ -11,7 +11,7 @@ export const environment = {
     },
     domain: 'gamers.org.ua',
     api: {
-        url: 'api.gamers.org.ua',
+        url: 'https://api.gamers.org.ua',
         port: 443,
     },
 };

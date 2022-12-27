@@ -528,7 +528,7 @@ export class PeerService implements OnDestroy {
         credential: string;
     }) {
         return {
-            host: environment.api.url,
+            host: environment.api.url.replace(/(http|https)\:\/\//, ''),
             port: environment.api.port,
             path: "/api/peer",
             config: {
