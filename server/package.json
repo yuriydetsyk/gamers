@@ -13,7 +13,7 @@
     "yuriydetsyk"
   ],
   "author": "yuriydetsyk",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "start": "node -r ts-node/register/transpile-only ./index.ts",
     "watch": "nodemon --inspect=9300 ./index.ts"
