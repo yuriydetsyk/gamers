@@ -129,7 +129,7 @@ Project Link: [https://github.com/YuriyDetsyk/gamers](https://github.com/YuriyDe
 [license-url]: https://github.com/YuriyDetsyk/gamers/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/yuriydetsyk
-[product-screenshot]: images/screenshot.jpg
+[product-screenshot]: images/screenshot_main.jpg
 [Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
 [Angular-url]: https://angular.io
 [Nodejs.org]: https://img.shields.io/badge/Node.js-3C873A?style=for-the-badge&logo=node.js&logoColor=white
