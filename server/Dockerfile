@@ -1,4 +1,4 @@
-FROM node:18-alpine AS base
+FROM node:14-alpine AS base
 
 # 1. Set the root working directory
 RUN mkdir -p /gamers

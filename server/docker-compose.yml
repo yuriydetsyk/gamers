@@ -1,20 +1,24 @@
-version: '3.8'
+version: "3.8"
 services:
-  api:
-    image: yuriydetsyk/gamers:${DEPLOY_TAG:-latest}
-    container_name: gamers-api
-    restart: unless-stopped
-    build:
-      context: ./
-      target: production
-      dockerfile: ./Dockerfile
-    environment:
-      - NODE_ENV=production
-      - GAMERS_ICE_SERVER_USERNAME=${GAMERS_ICE_SERVER_USERNAME:?}
-      - GAMERS_ICE_SERVER_CREDENTIAL=${GAMERS_ICE_SERVER_CREDENTIAL:?}
-      - GAMERS_TWILIO_ACCOUNT_SID=${GAMERS_TWILIO_ACCOUNT_SID:?}
-      - GAMERS_TWILIO_AUTH_TOKEN=${GAMERS_TWILIO_AUTH_TOKEN:?}
-    ports:
-      - 0:8002
-    networks:
-      - gamers_network
+    api:
+        image: yuriydetsyk/gamers:${DEPLOY_TAG:-latest}
+        container_name: gamers-api
+        restart: unless-stopped
+        build:
+            context: ./
+            target: production
+            dockerfile: ./Dockerfile
+        environment:
+            - NODE_ENV=production
+            - GAMERS_ICE_SERVER_USERNAME=${GAMERS_ICE_SERVER_USERNAME:?}
+            - GAMERS_ICE_SERVER_CREDENTIAL=${GAMERS_ICE_SERVER_CREDENTIAL:?}
+            - GAMERS_TWILIO_ACCOUNT_SID=${GAMERS_TWILIO_ACCOUNT_SID:?}
+            - GAMERS_TWILIO_AUTH_TOKEN=${GAMERS_TWILIO_AUTH_TOKEN:?}
+        ports:
+            - 5002:8002
+        networks:
+            - gamers_network
+
+networks:
+  gamers_network:
+    name: gamers_network
