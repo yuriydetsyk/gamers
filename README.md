@@ -21,7 +21,7 @@
   <p align="center">
     An awesome README template to jumpstart your projects!
     <br />
-    <a href="https://gamers.org.ua" target="_blank">Visit Website</a>
+    <a href="https://gamers.org.ua">Visit Website</a>
     ·
     <a href="https://github.com/YuriyDetsyk/gamers/issues">Report Bug</a>
     ·
