@@ -520,7 +520,7 @@ export class PeerService implements OnDestroy {
                 username: string;
                 credential: string;
             };
-        }>("/api/config");
+        }>(`${environment.api.url}/api/config`);
     }
 
     private getPeerServersConfig(peerjsConfig: {
