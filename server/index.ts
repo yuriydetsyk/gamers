@@ -2,7 +2,7 @@ import cors from "cors";
 import express from "express";
 import * as http from "http";
 
-import { config } from "./config";
+import { config, isProduction } from "./config";
 import { initPeerServer, initTwilio } from "./peer";
 
 (async () => {
@@ -12,10 +12,7 @@ import { initPeerServer, initTwilio } from "./peer";
 
         app.use(
             cors({
-                origin:
-                    config.server.env === "local"
-                        ? "localhost"
-                        : /.*.?(gamers\.org\.ua)/,
+                origin: !isProduction ? "localhost" : /.*.?(gamers\.org\.ua)/,
                 credentials: true,
             })
         );

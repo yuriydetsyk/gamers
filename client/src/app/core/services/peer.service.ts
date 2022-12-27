@@ -530,7 +530,7 @@ export class PeerService implements OnDestroy {
         return {
             host: environment.api.url.replace(/(http|https)\:\/\//, ''),
             port: environment.api.port,
-            path: "/api/peer",
+            path: "/api/peer/live",
             config: {
                 iceServers: [
                     {

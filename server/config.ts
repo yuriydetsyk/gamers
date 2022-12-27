@@ -8,7 +8,6 @@ type Config = {
         authToken: string;
     };
     peerjs: {
-        port: number;
         username: string;
         credential: string;
     };
@@ -28,8 +27,7 @@ export const getEnvValue = <T = string | number | boolean>(
     return value as T;
 };
 
-export const isProduction =
-    getEnvValue<string>("NODE_ENV", "development") === "production";
+export const isProduction = getEnvValue("GAMERS_ENV", "local") !== "local";
 
 export const config: Config = {
     server: {
@@ -41,7 +39,6 @@ export const config: Config = {
         authToken: getEnvValue("GAMERS_TWILIO_AUTH_TOKEN"),
     },
     peerjs: {
-        port: 443,
         username: getEnvValue("GAMERS_ICE_SERVER_USERNAME"),
         credential: getEnvValue("GAMERS_ICE_SERVER_CREDENTIAL"),
     },

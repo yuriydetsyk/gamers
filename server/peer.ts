@@ -14,7 +14,7 @@ export async function initTwilio() {
 
 export function initPeerServer(server: http.Server) {
     const peerServer = ExpressPeerServer(server, {
-        path: "/peer",
+        path: "/live",
     });
 
     peerServer.on("connection", (id) =>
