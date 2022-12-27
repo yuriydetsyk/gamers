@@ -124,7 +124,14 @@
               "devServerTarget": "gamers-website:serve:production"
             }
           }
-        }
+        },
+        "deploy": {
+            "builder": "angular-cli-ghpages:deploy",
+            "options": {
+              "name": "Yuriy Detsyk",
+              "email": "yuriy@chunkup.com"
+            }
+          }
       }
     }
   },
