@@ -16,7 +16,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --ssl true",
+    "start": "ng serve",
     "install:peerserver": "cd server && npm install",
     "start:peerserver": "cd server && npm run watch",
     "build": "ng build",

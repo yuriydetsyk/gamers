@@ -528,8 +528,8 @@ export class PeerService implements OnDestroy {
         credential: string;
     }) {
         return {
-            host: environment.domain,
-            port: 8002,
+            host: environment.api.url,
+            port: environment.api.port,
             path: "/api/peer",
             config: {
                 iceServers: [

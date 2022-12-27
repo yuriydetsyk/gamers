@@ -15,4 +15,4 @@ COPY . .
 
 # 4. Start the application
 FROM base as production
-CMD ["/bin/ash", "-c", "npm run migrate && npm start"]
+CMD ["/bin/ash", "-c", "npm start"]

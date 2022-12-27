@@ -2,7 +2,7 @@ version: '3.8'
 services:
   api:
     image: yuriydetsyk/gamers:${DEPLOY_TAG:-latest}
-    container_name: gamers-api-${GAMERS_ENV:?}
+    container_name: gamers-api
     restart: unless-stopped
     build:
       context: ./
@@ -10,24 +10,11 @@ services:
       dockerfile: ./Dockerfile
     environment:
       - NODE_ENV=production
-      - GAMERS_DB_USERNAME=${GAMERS_DB_USERNAME:?}
-      - GAMERS_DB_PASSWORD=${GAMERS_DB_PASSWORD:?}
-      - GAMERS_DB_PORT=${GAMERS_DB_PORT:?}
-      - GAMERS_PORT=${GAMERS_PORT:?}
-      - GAMERS_ENV=${GAMERS_ENV:?}
-      - GAMERS_SESSION_SECRET=${GAMERS_SESSION_SECRET:?}
-      - GAMERS_AWS_ACCESS_KEY_ID=${GAMERS_AWS_ACCESS_KEY_ID:?}
-      - GAMERS_AWS_SECRET_ACCESS_KEY=${GAMERS_AWS_SECRET_ACCESS_KEY:?}
-      - GAMERS_AWS_IMG_BUCKET=${GAMERS_AWS_IMG_BUCKET:?}
+      - GAMERS_ICE_SERVER_USERNAME=${GAMERS_ICE_SERVER_USERNAME:?}
+      - GAMERS_ICE_SERVER_CREDENTIAL=${GAMERS_ICE_SERVER_CREDENTIAL:?}
+      - GAMERS_TWILIO_ACCOUNT_SID=${GAMERS_TWILIO_ACCOUNT_SID:?}
+      - GAMERS_TWILIO_AUTH_TOKEN=${GAMERS_TWILIO_AUTH_TOKEN:?}
     ports:
-      - ${GAMERS_PORT:-4800}:4800
+      - 0:8002
     networks:
       - gamers_network
-    depends_on:
-      database:
-        condition: service_healthy
-    profiles: ["production"]
-
-networks:
-  gamers_network:
-    name: gamers_network_${GAMERS_ENV:-dev}

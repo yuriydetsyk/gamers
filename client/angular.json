@@ -69,8 +69,6 @@
           "options": {
             "browserTarget": "gamers-website:build",
             "port": 4300,
-            "sslKey": "certificates/localhost.key",
-            "sslCert": "certificates/localhost.crt",
             "proxyConfig": "angular.proxy.json"
           },
           "configurations": {

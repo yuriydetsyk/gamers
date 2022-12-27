@@ -10,4 +10,8 @@ export const environment = {
         appId: '1:934983022687:web:d7e995978057c10bfcc3ea'
     },
     domain: 'gamers.org.ua',
+    api: {
+        url: 'api.gamers.org.ua',
+        port: 443,
+    },
 };

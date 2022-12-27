@@ -10,4 +10,8 @@ export const environment = {
         appId: '1:934983022687:web:d7e995978057c10bfcc3ea'
     },
     domain: 'localhost',
+    api: {
+        url: 'localhost',
+        port: 4300,
+    },
 };

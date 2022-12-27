@@ -15,7 +15,6 @@ export async function initTwilio() {
 export function initPeerServer(server: http.Server) {
     const peerServer = ExpressPeerServer(server, {
         path: "/peer",
-        // proxied: true,
     });
 
     peerServer.on("connection", (id) =>
