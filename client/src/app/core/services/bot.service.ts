@@ -10,7 +10,7 @@ import { StepPhase } from '../../models/enums/step-phase.enum';
 import {
     NechtoCardComponent,
 } from '../../modules/games/modules/nechto/components/nechto-card/nechto-card.component';
-import { getRandomItem, getRandomMapItem } from '../helpers/array.helpers';
+import { getRandomMapItem } from '../helpers/array.helpers';
 import { isUndefined } from '../helpers/type.helpers';
 import { CardService } from './card.service';
 import { FirebaseService } from './firebase.service';

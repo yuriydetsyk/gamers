@@ -49,3 +49,5 @@ Thumbs.db
 
 # Custom
 twp.json
+.env
+.env.example

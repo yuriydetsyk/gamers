@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import { LocalStorageService } from '../services/local-storage.service';
 import { isNil } from './type.helpers';
 import { StorageKey } from '../../models/enums/storage-key.enum';
-import { environment } from '../../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AudioHelpers {
     private sounds: HTMLAudioElement[] = [];
+    private audioPath = '/assets/audio/';
 
     public get hasAudioEffects() {
         const hasAudio = this.localStorageService.get(StorageKey.AudioEffects);
@@ -22,7 +22,7 @@ export class AudioHelpers {
 
     public initSounds() {
         Object.keys(SoundEffect).forEach((key) => {
-            this.sounds.push(new Audio(`${environment.audioPath}${SoundEffect[key]}`));
+            this.sounds.push(new Audio(`${this.audioPath}${SoundEffect[key]}`));
         });
 
         this.sounds.forEach((item) => {
@@ -35,7 +35,7 @@ export class AudioHelpers {
     }
 
     public playSound(url: SoundEffect) {
-        const sound = this.getSound(url) || new Audio(`${environment.audioPath}${url}`);
+        const sound = this.getSound(url) || new Audio(`${this.audioPath}${url}`);
         if (!sound.paused || sound.currentTime) {
             setTimeout(() => {
                 sound.pause();

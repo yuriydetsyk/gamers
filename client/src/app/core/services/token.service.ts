@@ -10,8 +10,6 @@ import { FirebaseService } from './firebase.service';
 import { HttpService } from './http.service';
 import { RatingService } from './rating.service';
 import { UserService } from './user.service';
-import { GameInfoDto } from '../../models/dtos/game-info-dto.model';
-import { Game } from '../../models/enums/game.enum';
 
 @Injectable({
     providedIn: 'root'

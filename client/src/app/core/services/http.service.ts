@@ -7,8 +7,8 @@ import { Injectable } from '@angular/core';
 export class HttpService {
     constructor(private readonly http: HttpClient) { }
 
-    public get(url: string) {
-        return this.http.get(url);
+    public get<T = Object>(url: string) {
+        return this.http.get<T>(url);
     }
 
     public getPlain(url: string) {

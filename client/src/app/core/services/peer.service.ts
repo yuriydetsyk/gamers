@@ -1,22 +1,40 @@
-import { Injectable, OnDestroy } from '@angular/core';
-import Peer, { MediaConnection } from 'peerjs';
-import { interval, Observable, Observer, of, Subject, throwError, zip } from 'rxjs';
-import { catchError, finalize, map, switchMap, take, takeUntil, tap } from 'rxjs/operators';
+import { Injectable, OnDestroy } from "@angular/core";
+import Peer, { MediaConnection } from "peerjs";
+import {
+    from,
+    interval,
+    Observable,
+    Observer,
+    of,
+    Subject,
+    throwError,
+    zip,
+} from "rxjs";
+import {
+    catchError,
+    finalize,
+    map,
+    switchMap,
+    take,
+    takeUntil,
+    tap,
+} from "rxjs/operators";
 
-import { environment } from '../../../environments/environment';
-import { PlayerDto } from '../../models/dtos/player-dto.model';
-import { Game } from '../../models/enums/game.enum';
-import { PeerData } from '../../models/peer-data.model';
-import { PeerStream } from '../../models/peer-stream.model';
-import { isNil } from '../helpers/type.helpers';
-import { FirebaseService } from './firebase.service';
-import { GameService } from './game.service';
-import { MediaService } from './media.service';
-import { RoomService } from './room.service';
-import { UserService } from './user.service';
+import { environment } from "../../../environments/environment";
+import { PlayerDto } from "../../models/dtos/player-dto.model";
+import { Game } from "../../models/enums/game.enum";
+import { PeerData } from "../../models/peer-data.model";
+import { PeerStream } from "../../models/peer-stream.model";
+import { isNil } from "../helpers/type.helpers";
+import { FirebaseService } from "./firebase.service";
+import { GameService } from "./game.service";
+import { HttpService } from "./http.service";
+import { MediaService } from "./media.service";
+import { RoomService } from "./room.service";
+import { UserService } from "./user.service";
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: "root",
 })
 export class PeerService implements OnDestroy {
     public get userMedia$() {
@@ -34,7 +52,8 @@ export class PeerService implements OnDestroy {
         private readonly mediaService: MediaService,
         private readonly userService: UserService,
         private readonly roomService: RoomService,
-        private readonly gameService: GameService
+        private readonly gameService: GameService,
+        private readonly httpService: HttpService
     ) {
         interval(this.processStreamInterval)
             .pipe(takeUntil(this.destroy$))
@@ -78,102 +97,120 @@ export class PeerService implements OnDestroy {
         const roomId = this.roomService.getSelectedRoomId(game);
         const userId = this.userService.getCurrentUserId();
         if (!roomId || !userId) {
-            console.warn('Room ID or User ID not specified');
+            console.warn("Room ID or User ID not specified");
             return of(true);
         }
 
-        return this.clearPeerId(roomId, userId)
-            .pipe(
-                // Reset local peer data
-                map(() => this.clearPeerData(game))
-            );
+        return this.clearPeerId(roomId, userId).pipe(
+            // Reset local peer data
+            map(() => this.clearPeerData(game))
+        );
     }
 
     private initPeer() {
         const roomId = this.roomService.getSelectedRoomId();
         if (isNil(roomId)) {
-            throw new Error('Game or Room ID is missing');
+            throw new Error("Game or Room ID is missing");
         }
 
-        return new Observable((observer: Observer<Peer>) => {
-            this.isInitializingPeer = true;
+        const config = from(this.getConfig());
 
-            if (this.initializedPeer$) {
-                this.initializedPeer$.complete();
-            }
-            this.initializedPeer$ = new Subject<Peer>();
+        return config.pipe(
+            switchMap(({ peerjs }) => {
+                return new Observable((observer: Observer<Peer>) => {
+                    this.isInitializingPeer = true;
 
-            const peer = new Peer(this.firebaseService.generateId(), {
-                host: environment.peerjs.host,
-                port: environment.peerjs.port,
-                path: environment.peerjs.path,
-                config: environment.peerjs.config
-            });
+                    if (this.initializedPeer$) {
+                        this.initializedPeer$.complete();
+                    }
+                    this.initializedPeer$ = new Subject<Peer>();
 
-            peer.on('open', (id) => {
-                console.log(`--Peer has been opened: ${id}--`);
+                    const peer = new Peer(
+                        this.firebaseService.generateId(),
+                        this.getPeerServersConfig(peerjs)
+                    );
 
-                const userId = this.userService.getCurrentUserId();
+                    peer.on("open", (id) => {
+                        console.log(`--Peer has been opened: ${id}--`);
 
-                return zip(this.setPeerId(roomId, userId, id), this.userMedia$).pipe(
-                    take(1),
-                    tap(([_, userMedia]) => {
-                        peer.on('call', (call) => this.initIncomingCall(call, userMedia));
-                    }),
-                    switchMap(() => {
-                        return this.firebaseService.getQuery(
-                            PlayerDto,
-                            'players',
-                            [{
-                                field: 'roomId',
-                                operator: '==',
-                                value: roomId
-                            }]
-                        );
-                    }),
-                    switchMap((players) => this.processPeers(Game.Nechto, players, true)),
-                    map(() => {
-                        observer.next(peer);
-                        this.initializedPeer$.next(peer);
-                    }),
-                    finalize(() => {
-                        this.isInitializingPeer = false;
-                        return observer.complete();
-                    }),
-                    catchError((error) => {
-                        observer.error(error);
-                        return throwError(error);
-                    })
-                )
-                    .subscribe();
-            });
+                        const userId = this.userService.getCurrentUserId();
 
-            peer.on('close', () => {
-                console.log(`--Peer has been closed--`);
-            });
+                        return zip(
+                            this.setPeerId(roomId, userId, id),
+                            this.userMedia$
+                        )
+                            .pipe(
+                                take(1),
+                                tap(([_, userMedia]) => {
+                                    peer.on("call", (call) =>
+                                        this.initIncomingCall(call, userMedia)
+                                    );
+                                }),
+                                switchMap(() => {
+                                    return this.firebaseService.getQuery(
+                                        PlayerDto,
+                                        "players",
+                                        [
+                                            {
+                                                field: "roomId",
+                                                operator: "==",
+                                                value: roomId,
+                                            },
+                                        ]
+                                    );
+                                }),
+                                switchMap((players) =>
+                                    this.processPeers(
+                                        Game.Nechto,
+                                        players,
+                                        true
+                                    )
+                                ),
+                                map(() => {
+                                    observer.next(peer);
+                                    this.initializedPeer$.next(peer);
+                                }),
+                                finalize(() => {
+                                    this.isInitializingPeer = false;
+                                    return observer.complete();
+                                }),
+                                catchError((error) => {
+                                    observer.error(error);
+                                    return throwError(error);
+                                })
+                            )
+                            .subscribe();
+                    });
 
-            peer.on('disconnected', () => {
-                console.log(`--Peer has been disconnected--`);
-            });
+                    peer.on("close", () => {
+                        console.log(`--Peer has been closed--`);
+                    });
 
-            peer.on('error', (err) => {
-                console.log(`--Peer error--`);
-                console.log(err);
-            });
+                    peer.on("disconnected", () => {
+                        console.log(`--Peer has been disconnected--`);
+                    });
 
-            const peerData = this.getOrAddPeerData();
-            peerData.currentPeer = peer;
-        });
+                    peer.on("error", (err) => {
+                        console.log(`--Peer error--`);
+                        console.log(err);
+                    });
+
+                    const peerData = this.getOrAddPeerData();
+                    peerData.currentPeer = peer;
+                });
+            })
+        );
     }
 
     public setPeerId(roomId: string, userId: string, peerId: string) {
-        return this.firebaseService.get(PlayerDto, 'players', `${roomId}_${userId}`)
+        return this.firebaseService
+            .get(PlayerDto, "players", `${roomId}_${userId}`)
             .pipe(
                 switchMap((player) => {
                     if (player) {
                         return this.firebaseService.update(
                             PlayerDto,
-                            'players',
+                            "players",
                             `${roomId}_${userId}`,
                             { peerId }
                         );
@@ -190,7 +227,11 @@ export class PeerService implements OnDestroy {
         }
 
         const peerData = this.getOrAddPeerData();
-        if (peerData && peerData.currentPeer && !peerData.currentPeer.destroyed) {
+        if (
+            peerData &&
+            peerData.currentPeer &&
+            !peerData.currentPeer.destroyed
+        ) {
             peerData.currentPeer.destroy();
         }
 
@@ -207,19 +248,25 @@ export class PeerService implements OnDestroy {
         const playerComponents = this.gameService.getPlayerComponents();
 
         // No active streams left - remove all peer / stream data
-        if (!peerData.activeStreams.length) { // All players left the room
-            const otherStreamingPlayers = this.gameService.getStreamingPlayerComponents()
-                .filter((item) => item.playerId !== this.gameService.getActivePlayerId());
+        if (!peerData.activeStreams.length) {
+            // All players left the room
+            const otherStreamingPlayers = this.gameService
+                .getStreamingPlayerComponents()
+                .filter(
+                    (item) =>
+                        item.playerId !== this.gameService.getActivePlayerId()
+                );
 
             if (otherStreamingPlayers.length) {
-                console.log('>>> - Removing all active streams (all players left the room except current player)');
+                console.log(
+                    ">>> - Removing all active streams (all players left the room except current player)"
+                );
                 otherStreamingPlayers.forEach((item) => {
                     item.peerId = null;
 
                     if (item.hasStream) {
                         item.playerStream = null;
                     }
-
                 });
 
                 this.gameService.playerStreamsUpdated$.next();
@@ -229,14 +276,27 @@ export class PeerService implements OnDestroy {
         }
 
         playerComponents.forEach((playerComponent) => {
-            if (playerComponent.peerId) { // Player has a peer instance
-                const activeStream = peerData.activeStreams.find((item) => item.peerId === playerComponent.peerId);
-                if (activeStream && (!playerComponent.hasStream || playerComponent.playerStream.id !== activeStream.stream.id)) {
-                    console.log(`>>> + Enabling an active stream for player #${playerComponent.playerId}`);
+            if (playerComponent.peerId) {
+                // Player has a peer instance
+                const activeStream = peerData.activeStreams.find(
+                    (item) => item.peerId === playerComponent.peerId
+                );
+                if (
+                    activeStream &&
+                    (!playerComponent.hasStream ||
+                        playerComponent.playerStream.id !==
+                            activeStream.stream.id)
+                ) {
+                    console.log(
+                        `>>> + Enabling an active stream for player #${playerComponent.playerId}`
+                    );
                     playerComponent.playerStream = activeStream.stream;
                 }
-            } else if (playerComponent.hasStream) { // Player is not streaming anymore
-                console.log(`>>> - Disabling an active stream for player #${playerComponent.playerId}`);
+            } else if (playerComponent.hasStream) {
+                // Player is not streaming anymore
+                console.log(
+                    `>>> - Disabling an active stream for player #${playerComponent.playerId}`
+                );
                 playerComponent.playerStream = null;
             }
         });
@@ -262,44 +322,43 @@ export class PeerService implements OnDestroy {
     }
 
     private processPeers(game: Game, players: PlayerDto[], initCalls = false) {
-        return this.userMedia$
-            .pipe(
-                take(1),
-                map((userMedia) => {
-                    const peerData = this.getOrAddPeerData();
-                    if (isNil(game) || isNil(peerData.currentPeer)) {
-                        return;
-                    }
+        return this.userMedia$.pipe(
+            take(1),
+            map((userMedia) => {
+                const peerData = this.getOrAddPeerData();
+                if (isNil(game) || isNil(peerData.currentPeer)) {
+                    return;
+                }
 
-                    // Remove current player from the list.
-                    players = players.filter((player) => player.peerId !== peerData.currentPeer.id);
+                // Remove current player from the list.
+                players = players.filter(
+                    (player) => player.peerId !== peerData.currentPeer.id
+                );
 
-                    const peerIds = players.map((player) => player.peerId);
+                const peerIds = players.map((player) => player.peerId);
 
-                    // If we have any new players, initiate connection to them
-                    if (initCalls && players.length) {
-                        // Add new peers and create calls
-                        const newCallPlayers = peerIds
-                            .map((peerId) => players.find((player) => player.peerId === peerId));
+                // If we have any new players, initiate connection to them
+                if (initCalls && players.length) {
+                    // Add new peers and create calls
+                    const newCallPlayers = peerIds.map((peerId) =>
+                        players.find((player) => player.peerId === peerId)
+                    );
 
-                        newCallPlayers.forEach((player) => {
-                            this.initOutgoingCall(
-                                peerData.currentPeer,
-                                player.peerId,
-                                userMedia
-                            );
-                        });
-                    }
+                    newCallPlayers.forEach((player) => {
+                        this.initOutgoingCall(
+                            peerData.currentPeer,
+                            player.peerId,
+                            userMedia
+                        );
+                    });
+                }
 
-                    return peerData;
-                })
-            );
+                return peerData;
+            })
+        );
     }
 
-    private initIncomingCall(
-        call: MediaConnection,
-        userMedia: MediaStream) {
-
+    private initIncomingCall(call: MediaConnection, userMedia: MediaStream) {
         if (!call) {
             return;
         }
@@ -314,8 +373,8 @@ export class PeerService implements OnDestroy {
     private initOutgoingCall(
         peer: Peer,
         externalPeerId: string,
-        userMedia: MediaStream) {
-
+        userMedia: MediaStream
+    ) {
         if (!peer || !externalPeerId) {
             return;
         }
@@ -328,18 +387,18 @@ export class PeerService implements OnDestroy {
     }
 
     private initCallListeners(call: MediaConnection) {
-        call.on('stream', (remoteStream) => {
+        call.on("stream", (remoteStream) => {
             console.log(`---Call (peer ${call.peer}) stream---`);
 
             // Add stream locally so it can be later tracked
             this.addActiveStream(call, remoteStream);
         });
-        call.on('close', () => {
+        call.on("close", () => {
             console.log(`---Call (peer ${call.peer}) close---`);
 
             this.removeActiveStream(call.peer);
         });
-        call.on('error', (err) => {
+        call.on("error", (err) => {
             console.log(`---Call (peer ${call.peer}) error---`);
             console.log(err);
 
@@ -355,14 +414,20 @@ export class PeerService implements OnDestroy {
         const peerData = this.getOrAddPeerData();
         const peerId = call.peer;
         const peerStream = new PeerStream({ peerId, stream });
-        peerData.activeStreams = [...peerData.activeStreams.filter((item) => item.peerId !== peerId), peerStream];
+        peerData.activeStreams = [
+            ...peerData.activeStreams.filter((item) => item.peerId !== peerId),
+            peerStream,
+        ];
         console.log(`>>> + Adding an active stream for peer #${peerId}`);
     }
 
     private addActiveCall(call: MediaConnection) {
         const peerData = this.getOrAddPeerData();
         const peerId = call.peer;
-        peerData.activeCalls = [...peerData.activeCalls.filter((item) => item.peer !== peerId), call];
+        peerData.activeCalls = [
+            ...peerData.activeCalls.filter((item) => item.peer !== peerId),
+            call,
+        ];
         console.log(`>>> + Adding an active call for peer #${peerId}`);
     }
 
@@ -370,7 +435,9 @@ export class PeerService implements OnDestroy {
         this.removeActiveCall(peerId);
 
         const peerData = this.getOrAddPeerData();
-        peerData.activeStreams = peerData.activeStreams.filter((item) => item.peerId !== peerId);
+        peerData.activeStreams = peerData.activeStreams.filter(
+            (item) => item.peerId !== peerId
+        );
 
         console.log(`>>> - Removing an active stream for peer #${peerId}`);
     }
@@ -379,14 +446,16 @@ export class PeerService implements OnDestroy {
         const peerData = this.getOrAddPeerData();
         let call: MediaConnection;
 
-        peerData.activeCalls = [...peerData.activeCalls.filter((item) => {
-            if (item.peer !== peerId) {
-                return true;
-            } else {
-                call = item;
-                return false;
-            }
-        })];
+        peerData.activeCalls = [
+            ...peerData.activeCalls.filter((item) => {
+                if (item.peer !== peerId) {
+                    return true;
+                } else {
+                    call = item;
+                    return false;
+                }
+            }),
+        ];
 
         if (call && call.open) {
             call.close();
@@ -401,19 +470,25 @@ export class PeerService implements OnDestroy {
             return;
         }
 
-        const activePlayers = this.gameService.getActivePlayerComponents(true).length;
-        const activeStreamers = this.gameService.getStreamingPlayerComponents().length;
-        if (activePlayers === activeStreamers) { // We don't need to reconnect to any of connected peers
+        const activePlayers =
+            this.gameService.getActivePlayerComponents(true).length;
+        const activeStreamers =
+            this.gameService.getStreamingPlayerComponents().length;
+        if (activePlayers === activeStreamers) {
+            // We don't need to reconnect to any of connected peers
             return;
         }
 
-        const reconnectToStreamers = this.gameService.getInvalidStreamingPlayerComponents()
+        const reconnectToStreamers = this.gameService
+            .getInvalidStreamingPlayerComponents()
             .filter((item) => !!item.peerId);
         if (!reconnectToStreamers.length) {
             return;
         }
 
-        console.log('Different amount of activePlayers VS activeStreamers. Reconnecting...');
+        console.log(
+            "Different amount of activePlayers VS activeStreamers. Reconnecting..."
+        );
         console.log(`activePlayers = ${activePlayers}`);
         console.log(`activeStreamers = ${activeStreamers}`);
 
@@ -428,11 +503,60 @@ export class PeerService implements OnDestroy {
                                 player.peerId,
                                 userMedia
                             );
-                            console.log(`>>> - Reconnecting to peer #${player.peerId}`);
+                            console.log(
+                                `>>> - Reconnecting to peer #${player.peerId}`
+                            );
                         }
                     });
                 })
             )
             .subscribe();
+    }
+
+    private getConfig() {
+        return this.httpService.get<{
+            peerjs: {
+                port: number;
+                username: string;
+                credential: string;
+            };
+        }>("/api/config");
+    }
+
+    private getPeerServersConfig(peerjsConfig: {
+        username: string;
+        credential: string;
+    }) {
+        return {
+            host: environment.domain,
+            port: 8002,
+            path: "/api/peer",
+            config: {
+                iceServers: [
+                    {
+                        url: "stun:global.stun.twilio.com:3478?transport=udp",
+                        urls: "stun:global.stun.twilio.com:3478?transport=udp",
+                    },
+                    {
+                        url: "turn:global.turn.twilio.com:3478?transport=udp",
+                        urls: "turn:global.turn.twilio.com:3478?transport=udp",
+                        username: peerjsConfig.username,
+                        credential: peerjsConfig.credential,
+                    },
+                    {
+                        url: "turn:global.turn.twilio.com:3478?transport=tcp",
+                        urls: "turn:global.turn.twilio.com:3478?transport=tcp",
+                        username: peerjsConfig.username,
+                        credential: peerjsConfig.credential,
+                    },
+                    {
+                        url: "turn:global.turn.twilio.com:443?transport=tcp",
+                        urls: "turn:global.turn.twilio.com:443?transport=tcp",
+                        username: peerjsConfig.username,
+                        credential: peerjsConfig.credential,
+                    },
+                ],
+            },
+        };
     }
 }

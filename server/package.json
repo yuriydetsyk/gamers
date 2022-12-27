@@ -1,10 +1,10 @@
 {
   "name": "gamers-api",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Interactive WebRTC Application for Gamers",
   "repository": {
     "type": "git",
-    "url": "https://gamersorg@dev.azure.com/gamersorg/Gamers/_git/Gamers"
+    "url": "https://github.com/YuriyDetsyk/gamers"
   },
   "keywords": [
     "gamers",

@@ -1,29 +1,32 @@
-// #!/usr/bin/env node
+import express from "express";
+import * as http from "http";
+import { config } from "./config";
 
-import * as fs from 'fs';
-import { PeerServer } from 'peer';
+import { initPeerServer, initTwilio } from "./peer";
 
-// Your Account Sid and Auth Token from twilio.com/console
-// DANGER! This is insecure. See http://twil.io/secure
-const accountSid = 'AC4f405e6135df310fa224f87406ba3807';
-const authToken = '9435c1e77dc99dc579f0c8bc86d1d34d';
-const client = require('twilio')(accountSid, authToken);
+(async () => {
+    try {
+        const app = express();
+        app.disable("x-powered-by");
 
-client.tokens.create().then((token) => {
-    console.log(`Twilio username: ${token.username}`);
-});
+        const server = http.createServer(app);
 
-const server = PeerServer({
-    port: 9000,
-    path: '/peer',
-    proxied: true,
-    // ssl: {
-    //     key: '../certificates/localhost.key',
-    //     cert: '../certificates/localhost.crt'
-    // }
-});
+        await initTwilio();
 
-server.on('connection', (id) => console.log(`New Peer Connection: ${id}`));
-server.on('disconnect', (id) => console.log(`Peer Disconnected: ${id}`));
+        app.use("/api/peer", initPeerServer(server));
 
-console.log('PeerServer has been started');
+        app.get("/api/config", (_, res) =>
+            res.send({
+                peerjs: config.peerjs,
+            })
+        );
+
+        server.listen(config.server.port, () => {
+            console.log(`Gamers API listening on :${config.server.port}`);
+        });
+    } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error(e);
+        process.exit(1);
+    }
+})();
