@@ -1,5 +1,6 @@
 type Config = {
     server: {
+        env: 'local' | 'prod';
         port: number;
     }
     twilio: {
@@ -32,6 +33,7 @@ export const isProduction =
 
 export const config: Config = {
     server: {
+        env: getEnvValue("GAMERS_ENV", "local"),
         port: 8002,
     },
     twilio: {

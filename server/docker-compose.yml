@@ -10,6 +10,7 @@ services:
             dockerfile: ./Dockerfile
         environment:
             - NODE_ENV=production
+            - GAMERS_ENV=${GAMERS_ENV:?}
             - GAMERS_ICE_SERVER_USERNAME=${GAMERS_ICE_SERVER_USERNAME:?}
             - GAMERS_ICE_SERVER_CREDENTIAL=${GAMERS_ICE_SERVER_CREDENTIAL:?}
             - GAMERS_TWILIO_ACCOUNT_SID=${GAMERS_TWILIO_ACCOUNT_SID:?}

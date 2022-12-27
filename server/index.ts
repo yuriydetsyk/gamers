@@ -1,13 +1,24 @@
+import cors from "cors";
 import express from "express";
 import * as http from "http";
-import { config } from "./config";
 
+import { config } from "./config";
 import { initPeerServer, initTwilio } from "./peer";
 
 (async () => {
     try {
         const app = express();
         app.disable("x-powered-by");
+
+        app.use(
+            cors({
+                origin:
+                    config.server.env === "local"
+                        ? "localhost"
+                        : /.*.?(gamers\.org\.ua)/,
+                credentials: true,
+            })
+        );
 
         const server = http.createServer(app);
 
