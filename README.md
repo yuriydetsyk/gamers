@@ -108,7 +108,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Yuriy Detsyk - [@yuriydetsyk](https://youtube.com/yuriydetsyk) - yuriy@chunkup.com
+Yuriy Detsyk - [@yuriydetsyk](https://youtube.com/@yuriydetsyk) - yuriy@chunkup.com
 
 Project Link: [https://github.com/YuriyDetsyk/gamers](https://github.com/YuriyDetsyk/gamers)
 
