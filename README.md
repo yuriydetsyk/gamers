@@ -19,7 +19,7 @@
   <h3 align="center">Gamers Website - Interactive Board Games</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
+    The website for playing live board games together and communicating with each other at once.
     <br />
     <a href="https://gamers.org.ua">Visit Website</a>
     ·
