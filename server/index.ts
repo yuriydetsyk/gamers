@@ -20,16 +20,20 @@ import { initPeerServer, initTwilio } from "./peer";
         const server = http.createServer(app);
 
         const token = await initTwilio();
+        const processedICEServers = token.iceServers.map((server) => {
+            const { url, ...processedServer } = server;
+            return processedServer;
+        });
 
         app.use("/api/peer", initPeerServer(server));
 
-        app.get("/api/config", (_, res) =>
+        app.get("/api/config", (_, res) => {
             res.send({
                 peerjs: {
-                    iceServers: token.iceServers,
+                    iceServers: processedICEServers,
                 }
-            })
-        );
+            });
+        });
 
         server.listen(config.server.port, () => {
             console.log(`Gamers API listening on :${config.server.port}`);

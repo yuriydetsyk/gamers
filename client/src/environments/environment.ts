@@ -11,7 +11,7 @@ export const environment = {
     },
     domain: 'localhost',
     api: {
-        url: 'http://localhost',
+        url: '',
         port: 4300,
     },
 };
