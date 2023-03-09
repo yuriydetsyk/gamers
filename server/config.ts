@@ -7,10 +7,6 @@ type Config = {
         accountSid: string;
         authToken: string;
     };
-    peerjs: {
-        username: string;
-        credential: string;
-    };
 };
 
 const missingEnvVars: string[] = [];
@@ -37,10 +33,6 @@ export const config: Config = {
     twilio: {
         accountSid: getEnvValue("GAMERS_TWILIO_ACCOUNT_SID"),
         authToken: getEnvValue("GAMERS_TWILIO_AUTH_TOKEN"),
-    },
-    peerjs: {
-        username: getEnvValue("GAMERS_ICE_SERVER_USERNAME"),
-        credential: getEnvValue("GAMERS_ICE_SERVER_CREDENTIAL"),
     },
 };
 

@@ -21,7 +21,7 @@ import { AudioHelpers } from '../../../../core/helpers/audio.helpers';
     styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-    public websiteTitle = 'Gamers.Org.Ua';
+    public websiteTitle = 'Gamers Website';
     public openedMenuItem: MenuItem;
     public MenuItem = MenuItem;
     public Game = Game;

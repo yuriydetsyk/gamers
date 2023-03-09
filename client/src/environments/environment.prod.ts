@@ -9,9 +9,9 @@ export const environment = {
         messagingSenderId: '934983022687',
         appId: '1:934983022687:web:d7e995978057c10bfcc3ea'
     },
-    domain: 'gamers.org.ua',
+    domain: 'gamers.api.chunkup.com',
     api: {
-        url: 'https://api.gamers.org.ua',
+        url: 'https://gamers.api.chunkup.com',
         port: 443,
     },
 };

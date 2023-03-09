@@ -8,8 +8,17 @@ export async function initTwilio() {
         config.twilio.authToken
     );
 
-    const token: { username: string } = await client.tokens.create();
-    console.log(`Twilio username: ${token.username}`);
+    const token = await client.tokens.create() as {
+        username: string;
+        password: string;
+        iceServers: {
+            url: string;
+            urls: string;
+            username?: string;
+            credential?: string;
+        }[];
+    };
+    return token;
 }
 
 export function initPeerServer(server: http.Server) {
