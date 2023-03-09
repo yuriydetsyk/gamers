@@ -12,7 +12,7 @@ import { initPeerServer, initTwilio } from "./peer";
 
         app.use(
             cors({
-                origin: !isProduction ? "localhost" : /.*.?(gamers\.org\.ua)/,
+                origin: !isProduction ? "localhost" : /.*.?chunkup\.com/,
                 credentials: true,
             })
         );

@@ -21,7 +21,7 @@
   <p align="center">
     The website for playing live board games together and communicating with each other at once.
     <br />
-    <a href="https://gamers.org.ua">Visit Website</a>
+    <a href="https://gamers.chunkup.com">Visit Website</a>
     ·
     <a href="https://github.com/YuriyDetsyk/gamers/issues">Report Bug</a>
     ·
@@ -52,7 +52,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Application Screen Shot][product-screenshot]](https://gamers.org.ua)
+[![Application Screen Shot][product-screenshot]](https://gamers.chunkup.com)
 
 The original idea for this project was to create an interactive portal for gamers that love to spend their time playing different board games online. Ideally, all the players were supposed to communicate with each other live via conference call, while playing the game. Basically, without a necessity to join any 3rd party communication application, so everything is at a single place.
 

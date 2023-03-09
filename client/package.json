@@ -8,7 +8,6 @@
   },
   "keywords": [
     "gamers",
-    "gamersorg",
     "chunkup",
     "yuriydetsyk"
   ],
@@ -24,7 +23,7 @@
     "e2e": "ng e2e",
     "postinstall": "ngcc",
     "test_postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points",
-    "deploy": "ng deploy --cname=gamers.org.ua --build-target=gamers-website:build:production --no-silent"
+    "deploy": "ng deploy --cname=gamers.chunkup.com --build-target=gamers-website:build:production --no-silent"
   },
   "private": true,
   "dependencies": {
