@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from "@angular/core";
 import Peer, { MediaConnection } from "peerjs";
 import {
-    from,
+    BehaviorSubject,
     interval,
     Observable,
     Observer,
@@ -23,6 +23,7 @@ import {
 import { environment } from "../../../environments/environment";
 import { PlayerDto } from "../../models/dtos/player-dto.model";
 import { Game } from "../../models/enums/game.enum";
+import { Config } from '../../models/interfaces/config';
 import { PeerData } from "../../models/peer-data.model";
 import { PeerStream } from "../../models/peer-stream.model";
 import { isNil } from "../helpers/type.helpers";
@@ -46,6 +47,7 @@ export class PeerService implements OnDestroy {
     private destroy$ = new Subject<void>();
     private reconnectInterval = 10000;
     private processStreamInterval = 2000;
+    private config$ = new BehaviorSubject<Config | null>(null);
 
     constructor(
         private readonly firebaseService: FirebaseService,
@@ -113,10 +115,8 @@ export class PeerService implements OnDestroy {
             throw new Error("Game or Room ID is missing");
         }
 
-        const config = from(this.getConfig());
-
-        return config.pipe(
-            switchMap(({ peerjs }) => {
+        return this.getPeerServersConfig().pipe(
+            switchMap((peerServersConfig) => {
                 return new Observable((observer: Observer<Peer>) => {
                     this.isInitializingPeer = true;
 
@@ -127,7 +127,7 @@ export class PeerService implements OnDestroy {
 
                     const peer = new Peer(
                         this.firebaseService.generateId(),
-                        this.getPeerServersConfig(peerjs)
+                        peerServersConfig,
                     );
 
                     peer.on("open", (id) => {
@@ -514,49 +514,27 @@ export class PeerService implements OnDestroy {
     }
 
     private getConfig() {
-        return this.httpService.get<{
-            peerjs: {
-                port: number;
-                username: string;
-                credential: string;
-            };
-        }>(`${environment.api.url}/api/config`);
+        if (this.config$.value) {
+            return of(this.config$.value);
+        }
+
+        return this.httpService.get<Config>(`${environment.api.url}/api/config`).pipe(
+            tap((config) => this.config$.next(config))
+        );
     }
 
-    private getPeerServersConfig(peerjsConfig: {
-        username: string;
-        credential: string;
-    }) {
-        return {
-            host: environment.api.url.replace(/(http|https)\:\/\//, ''),
-            port: environment.api.port,
-            path: "/api/peer/live",
-            config: {
-                iceServers: [
-                    {
-                        url: "stun:global.stun.twilio.com:3478?transport=udp",
-                        urls: "stun:global.stun.twilio.com:3478?transport=udp",
+    private getPeerServersConfig() {
+        return this.getConfig().pipe(
+            map((config) => {
+                return {
+                    host: environment.api.url.replace(/(http|https)\:\/\//, ''),
+                    port: environment.api.port,
+                    path: "/api/peer/live",
+                    config: {
+                        iceServers: config.peerjs.iceServers
                     },
-                    {
-                        url: "turn:global.turn.twilio.com:3478?transport=udp",
-                        urls: "turn:global.turn.twilio.com:3478?transport=udp",
-                        username: peerjsConfig.username,
-                        credential: peerjsConfig.credential,
-                    },
-                    {
-                        url: "turn:global.turn.twilio.com:3478?transport=tcp",
-                        urls: "turn:global.turn.twilio.com:3478?transport=tcp",
-                        username: peerjsConfig.username,
-                        credential: peerjsConfig.credential,
-                    },
-                    {
-                        url: "turn:global.turn.twilio.com:443?transport=tcp",
-                        urls: "turn:global.turn.twilio.com:443?transport=tcp",
-                        username: peerjsConfig.username,
-                        credential: peerjsConfig.credential,
-                    },
-                ],
-            },
-        };
+                };
+            })
+        );
     }
 }
