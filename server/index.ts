@@ -19,13 +19,15 @@ import { initPeerServer, initTwilio } from "./peer";
 
         const server = http.createServer(app);
 
-        await initTwilio();
+        const token = await initTwilio();
 
         app.use("/api/peer", initPeerServer(server));
 
         app.get("/api/config", (_, res) =>
             res.send({
-                peerjs: config.peerjs,
+                peerjs: {
+                    iceServers: token.iceServers,
+                }
             })
         );
 
